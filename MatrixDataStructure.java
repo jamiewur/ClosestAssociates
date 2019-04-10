@@ -289,29 +289,6 @@ public class MatrixDataStructure {
     }
 
 
-    /**
-     * Print the vertex to System
-     *
-     * @param1 object of PrintWriter
-     */
-    public void printVertex(PrintWriter os){
-        for(String a:vertexMap.keySet()){
-            os.print(a);
-        }
-    }
-
-
-    /**
-     * Print the edges to System
-     *
-     * @param1 object of PrintWriter
-     */
-    public void printEdge(PrintWriter os){
-        for(String a:edgeMap.keySet()){
-            os.print(a);
-        }
-    }
-
 
     /**
      * Return the number of In-k of a vertex

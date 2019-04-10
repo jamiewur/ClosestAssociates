@@ -108,13 +108,17 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
     public void printVertices(PrintWriter os) {
         // Implement me!
-        matrixDataStructure.printVertex(os);
+        for(String a:matrixDataStructure.vertexMap.keySet()){
+            os.print(a);
+        }
     } // end of printVertices()
 
 
     public void printEdges(PrintWriter os) {
         // Implement me!
-        matrixDataStructure.printEdge(os);
+        for(String a:matrixDataStructure.edgeMap.keySet()){
+            os.print(a);
+        }
     } // end of printEdges()
 
 } // end of class IncidenceMatrix
