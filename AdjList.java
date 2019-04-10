@@ -74,7 +74,18 @@ public class AdjList extends AbstractAssocGraph {
     } // end of updateWeightEdge()
 
     public void removeVertex(String vertLabel) {
-        
+        Integer indexToRemove = vertToIndex.remove(vertLabel);
+        if (indexToRemove == null) {
+            return;
+        }
+        rows[indexToRemove] = null;
+        for (int i = 0; i < pointer; i++) {
+            MyLinkedList edges = rows[i];
+            if (edges != null) {
+                edges.remove(vertLabel);
+            }
+        }
+        numOfVerts--;
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
