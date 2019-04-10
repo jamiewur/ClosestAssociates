@@ -103,11 +103,7 @@ public class AdjList extends AbstractAssocGraph {
             return neighbours;
         }
         neighbours.addAll(srcVertList.getAllValues());
-        if (neighbours.size() < k || k == -1) {
-            return neighbours;
-        }
-        Collections.sort(neighbours, Collections.reverseOrder());
-        return neighbours.subList(0, k - 1);
+        return getKNearestNeighbors(k, neighbours);
     } // end of outNearestNeighbours()
 
     public void printVertices(PrintWriter os) {
@@ -134,6 +130,14 @@ public class AdjList extends AbstractAssocGraph {
             return null;
         }
         return rows[index];
+    }
+
+    private List<MyPair> getKNearestNeighbors(int k, List<MyPair> neighbours) {
+        if (neighbours.size() < k || k == -1) {
+            return neighbours;
+        }
+        Collections.sort(neighbours, Collections.reverseOrder());
+        return neighbours.subList(0, k - 1);
     }
 
 } // end of class AdjList
