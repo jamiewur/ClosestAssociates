@@ -11,7 +11,7 @@ public class MyLinkedList {
     public void add(MyPair newValue) {
         Node newNode = new Node(newValue);
         if (head == null) {
-            head = newNode
+            head = newNode;
         } else {
             newNode.setNext(head);
             head = newNode;
