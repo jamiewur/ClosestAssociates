@@ -34,24 +34,41 @@ public class AdjList extends AbstractAssocGraph {
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
         MyPair newEdge = new MyPair(tarLabel, weight);
-        int index = vertToIndex.get(srcLabel);
-        MyLinkedList srcVertList = rows[index];
+        MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
+        if (srcVertList == null) {
+            System.out.println("Source vertex doesn't exist. Cannot add edge.");
+        }
         srcVertList.add(newEdge);
     } // end of addEdge()
 
     public int getEdgeWeight(String srcLabel, String tarLabel) {
-        // Implement me!
-
-        // update return value
-        return EDGE_NOT_EXIST;
+        MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
+        if (srcVertList == null) {
+            return EDGE_NOT_EXIST;
+        }
+        MyPair edge = srcVertList.find(tarLabel);
+        if (edge == null) {
+            return EDGE_NOT_EXIST;
+        }
+        return edge.getValue();
     } // end of existEdge()
 
     public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
+        MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
+        if (srcVertList == null) {
+            System.out.println("Source vertex doesn't exist. Cannot update edge weight.");
+            return;
+        }
+        MyPair edge = srcVertList.find(tarLabel);
+        if (edge == null) {
+            System.out.println("Edge doesn't exist. Cannot update weight.");
+            return;
+        }
+        edge.setValue(weight);
     } // end of updateWeightEdge()
 
     public void removeVertex(String vertLabel) {
-        // Implement me!
+        
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
@@ -86,6 +103,14 @@ public class AdjList extends AbstractAssocGraph {
             int newLen = currentLen + 25;
             rows = Arrays.copyOf(rows, newLen);
         }
+    }
+
+    private MyLinkedList getListOfEdgesForVert(String srcLabel) {
+        Integer index = vertToIndex.get(srcLabel);
+        if (index == null) {
+            return null;
+        }
+        return rows[index];
     }
 
 } // end of class AdjList
