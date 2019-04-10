@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class MyLinkedList {
 
     private Node head;
@@ -28,6 +30,47 @@ public class MyLinkedList {
             currentNode = currentNode.getNext();
         }
         return currentNode.getValue();
+    }
+
+    public MyPair find(String vertLabel) {
+        if (length == 0) {
+            return null;
+        }
+        Node currentNode = head;
+        for (int i = 0; i < length; i++) {
+            MyPair currentEdge = currentNode.getValue();
+            String currentNodeVertLabel = currentEdge.getKey();
+            if (Objects.equals(currentNodeVertLabel, vertLabel)) {
+                return currentEdge;
+            }
+            currentNode = currentNode.getNext();
+        }
+        return null;
+    }
+
+    public boolean remove(String vertLabel) {
+        if (length == 0) {
+            return false;
+        }
+        Node currentNode = head;
+        if (Objects.equals(currentNode.getValue().getKey(), vertLabel)) {
+            head = currentNode.getNext();
+            length--;
+            return true;
+        }
+        Node previousNode = currentNode;
+        currentNode = currentNode.getNext();
+        while (currentNode != null) {
+            if (Objects.equals(currentNode.getValue().getKey(), vertLabel)) {
+                previousNode.setNext(currentNode.getNext());
+                currentNode = null;
+                length--;
+                return true;
+            }
+            previousNode = currentNode;
+            currentNode = currentNode.getNext();
+        }
+        return false;
     }
 
     private class Node {
