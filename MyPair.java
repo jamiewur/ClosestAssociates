@@ -6,25 +6,29 @@
  * @author Jeffrey Chan, 2019
  */
 class MyPair {
-	private String mVert;
-	private Integer mWeight;
 
-	public MyPair(String vert, Integer weight) {
-		mVert = vert;
-		mWeight = weight;
-	}
+    private String mVert;
+    private Integer mWeight;
 
+    public MyPair(String vert, Integer weight) {
+        mVert = vert;
+        mWeight = weight;
+    }
 
-	public String getKey() {
-		return mVert;
-	}
+    public String getKey() {
+        return mVert;
+    }
 
-	public void setKey(String mVert) { this.mVert = mVert; }
+    public void setKey(String mVert) {
+        this.mVert = mVert;
+    }
 
-	public Integer getValue() {
-		return mWeight;
-	}
+    public Integer getValue() {
+        return mWeight;
+    }
 
-	public void setValue(Integer mWeight) { this.mWeight = mWeight; }
+    public void setValue(Integer mWeight) {
+        this.mWeight = mWeight;
+    }
 
 } // end of class MyPair
