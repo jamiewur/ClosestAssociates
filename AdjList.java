@@ -37,6 +37,12 @@ public class AdjList extends AbstractAssocGraph {
         MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
         if (srcVertList == null) {
             System.out.println("Source vertex doesn't exist. Cannot add edge.");
+            return;
+        }
+        MyPair existingEdge = srcVertList.find(tarLabel);
+        if (existingEdge != null) {
+            System.err.println("Edge already exists. Consider updating the weight.");
+            return;
         }
         srcVertList.add(newEdge);
     } // end of addEdge()
