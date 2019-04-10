@@ -10,20 +10,33 @@ import java.util.*;
  */
 public class AdjList extends AbstractAssocGraph {
 
+    private HashMap<String, Integer> vertToIndex;
+    private MyLinkedList[] rows;
+    private int numOfVerts;
+    private int pointer = 0; // Keep track of next vertex index
+
     /**
      * Contructs empty graph.
      */
     public AdjList() {
-        // Implement me!
-
+        vertToIndex = new HashMap<>();
+        rows = new MyLinkedList[30];
+        numOfVerts = 0;
     } // end of AdjList()
 
     public void addVertex(String vertLabel) {
-        // Implement me!
+        updateArrayLength();
+        vertToIndex.put(vertLabel, pointer);
+        rows[pointer] = new MyLinkedList();
+        pointer++;
+        numOfVerts++;
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
+        MyPair newEdge = new MyPair(tarLabel, weight);
+        int index = vertToIndex.get(srcLabel);
+        MyLinkedList srcVertList = rows[index];
+        srcVertList.add(newEdge);
     } // end of addEdge()
 
     public int getEdgeWeight(String srcLabel, String tarLabel) {
@@ -67,15 +80,10 @@ public class AdjList extends AbstractAssocGraph {
 
     private void updateArrayLength() {
         int currentLen = rows.length;
-        if (currentLen - numOfVerts <= 5) {
-            // Increase array size by 25 when the difference between current size and number of vertices
+        if (currentLen - pointer <= 5) {
+            // Increase array size by 25 when the difference between current size and vertex pointer
             // is smaller than or equal to 5
             int newLen = currentLen + 25;
-            rows = Arrays.copyOf(rows, newLen);
-        } else if (currentLen - numOfVerts >= 55) {
-            // Decrease array size by 25 when the difference between current size and number of vertices
-            // is greater than or equal to 55
-            int newLen = currentLen - 25;
             rows = Arrays.copyOf(rows, newLen);
         }
     }
