@@ -19,8 +19,12 @@ class MyPair {
 		return mVert;
 	}
 
+	public void setKey(String mVert) { this.mVert = mVert; }
+
 	public Integer getValue() {
 		return mWeight;
 	}
+
+	public void setValue(Integer mWeight) { this.mWeight = mWeight; }
 
 } // end of class MyPair
