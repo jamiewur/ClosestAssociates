@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MyLinkedList {
@@ -71,6 +73,19 @@ public class MyLinkedList {
             currentNode = currentNode.getNext();
         }
         return false;
+    }
+
+    public List<MyPair> getAllValues() {
+        if (length == 0) {
+            return new ArrayList<>();
+        }
+        List<MyPair> list = new ArrayList<>();
+        Node currentNode = head;
+        while (currentNode != null) {
+            list.add(currentNode.getValue());
+            currentNode = currentNode.getNext();
+        }
+        return list;
     }
 
     private class Node {
