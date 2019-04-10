@@ -150,7 +150,7 @@ public class MatrixDataStructure {
      */
     public List<MyPair> returnInKnearestNeighbour(int k, String vertex){
         List<MyPair> neighbours = new ArrayList<MyPair>();
-        List<MyPair> allInNeighbours = new ArrayList<>();
+        List<MyPair> allNeighbours = this.returnAllNeighbour(vertex);
         int[] allWeights = new int[100];
         String[] allNearestNeighbours = new String[100];
         int[] nearestWeights = new int[k];
@@ -159,20 +159,9 @@ public class MatrixDataStructure {
         int weightOfEdge;
         String neighbour;
 
-        for(String e:edgeMap.keySet()){
-            if(e.contains(vertex)){
-               for(String a: vertexMap.keySet()){
-                   if(edgeWeightArray[vertexMap.get(a)][edgeMap.get(e)]<0){
-                       neighbour = a;
-                       weightOfEdge = edgeWeightArray[vertexMap.get(a)][edgeMap.get(e)];
-                       allInNeighbours.add(new MyPair(neighbour,weightOfEdge));
-                   }
-               }
-            }
-        }
-        for(int i=0; i<allInNeighbours.size();i++){
-            allWeights[i] = allInNeighbours.get(i).getValue();
-            allNearestNeighbours[i] = allInNeighbours.get(i).getKey();
+        for(int i=0; i<allNeighbours.size();i++){
+            allWeights[i] = allNeighbours.get(i).getValue();
+            allNearestNeighbours[i] = allNeighbours.get(i).getKey();
         }
         for(int i=0; i<k;i++) {
             for (int j = 0; j < allWeights.length; j++) {
@@ -203,7 +192,7 @@ public class MatrixDataStructure {
 
     public List<MyPair> returnOutKnearestNeighbour(int k, String vertex){
         List<MyPair> neighbours = new ArrayList<MyPair>();
-        List<MyPair> allOutNeighbours = new ArrayList<>();
+        List<MyPair> allNeighbours = this.returnAllNeighbour(vertex);
         int[] allWeights = new int[100];
         String[] allNearestNeighbours = new String[100];
         int[] nearestWeights = new int[k];
@@ -212,20 +201,9 @@ public class MatrixDataStructure {
         int weightOfEdge;
         String neighbour;
 
-        for(String e:edgeMap.keySet()){
-            if(e.contains(vertex)){
-                for(String a: vertexMap.keySet()){
-                    if(edgeWeightArray[vertexMap.get(a)][edgeMap.get(e)]>0){
-                        neighbour = a;
-                        weightOfEdge = edgeWeightArray[vertexMap.get(a)][edgeMap.get(e)];
-                        allOutNeighbours.add(new MyPair(neighbour,weightOfEdge));
-                    }
-                }
-            }
-        }
-        for(int i=0; i<allOutNeighbours.size();i++){
-            allWeights[i] = allOutNeighbours.get(i).getValue();
-            allNearestNeighbours[i] = allOutNeighbours.get(i).getKey();
+        for(int i=0; i<allNeighbours.size();i++){
+            allWeights[i] = allNeighbours.get(i).getValue();
+            allNearestNeighbours[i] = allNeighbours.get(i).getKey();
         }
         for(int i=0; i<k;i++) {
             for (int j = 0; j < allWeights.length; j++) {
