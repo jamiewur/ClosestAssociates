@@ -89,11 +89,18 @@ public class AdjList extends AbstractAssocGraph {
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-
-        // Implement me!
-
-        return neighbours;
+        List<MyPair> neighbours = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : vertToIndex.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            MyLinkedList edges = rows[value.intValue()];
+            MyPair edge = edges.find(vertLabel);
+            if (edge != null) {
+                MyPair newPair = new MyPair(key, edge.getValue());
+                neighbours.add(newPair);
+            }
+        }
+        return getKNearestNeighbors(k, neighbours);
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
