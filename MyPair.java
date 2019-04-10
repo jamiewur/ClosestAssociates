@@ -19,10 +19,6 @@ class MyPair implements Comparable<MyPair> {
         return mVert;
     }
 
-    public void setKey(String mVert) {
-        this.mVert = mVert;
-    }
-
     public Integer getValue() {
         return mWeight;
     }
