@@ -81,10 +81,10 @@ public class IncidenceMatrix extends AbstractAssocGraph {
             System.err.println("The vertex does not exist");
             return neighbours;
         } else if(k == -1)
-            return matrixDataStructure.returnAllNeighbour(vertLabel);
+            return matrixDataStructure.returnAllInNeighbour(vertLabel);
         else if(k>matrixDataStructure.checkMaxInK(vertLabel)){
             System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxInK(vertLabel));
-            return neighbours;}
+            return matrixDataStructure.returnInKnearestNeighbour(matrixDataStructure.checkMaxInK(vertLabel), vertLabel);}
         else
             return matrixDataStructure.returnInKnearestNeighbour(k, vertLabel);
     } // end of inNearestNeighbours()
@@ -97,11 +97,11 @@ public class IncidenceMatrix extends AbstractAssocGraph {
             System.err.println("The vertex does not exist");
             return neighbours;
         } else if(k == -1) {
-            return matrixDataStructure.returnAllNeighbour(vertLabel);
+            return matrixDataStructure.returnAllOutNeighbour(vertLabel);
         }
         else if(k>matrixDataStructure.checkMaxOutK(vertLabel)){
             System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxOutK(vertLabel));
-            return neighbours;}
+            return matrixDataStructure.returnOutKnearestNeighbour(matrixDataStructure.checkMaxOutK(vertLabel), vertLabel);}
         else return matrixDataStructure.returnOutKnearestNeighbour(k, vertLabel);
     } // end of outNearestNeighbours()
 

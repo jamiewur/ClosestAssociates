@@ -155,8 +155,6 @@ public class MatrixDataStructure {
         int[] nearestWeights = new int[k];
         String[] nearestNeighbours = new String[k];
         int maxIndex = 0;
-        int weightOfEdge;
-        String neighbour;
 
         for(int i=0; i<allNeighbours.size();i++){
             allWeights[i] = allNeighbours.get(i).getValue();
@@ -197,8 +195,6 @@ public class MatrixDataStructure {
         int[] nearestWeights = new int[k];
         String[] nearestNeighbours = new String[k];
         int maxIndex = 0;
-        int weightOfEdge;
-        String neighbour;
 
         for(int i=0; i<allNeighbours.size();i++){
             allWeights[i] = allNeighbours.get(i).getValue();
@@ -224,6 +220,53 @@ public class MatrixDataStructure {
 
 
     /**
+     * Return Out All real Neighbours (>0)
+     *
+     * @param1 The name of vertex
+     * @returns The List of Out vertex, which obey k-nearest principle
+     */
+    public List<MyPair> returnAllOutNeighbour(String vertex){
+        List<MyPair> allNeighbours = new ArrayList<>();
+        String neighbour;
+        int weightOfEdge;
+
+        for(String e:edgeMap.keySet()){
+            if(e.contains(vertex)&&edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)]>0){
+                if(e.endsWith(vertex))
+                neighbour = e.substring(0,1);
+                else neighbour = e.substring(1);
+                        weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
+                        allNeighbours.add(new MyPair(neighbour,weightOfEdge));
+                    }
+                }return allNeighbours;
+            }
+
+
+
+    /**
+     * Return Out All real Neighbours (>0)
+     *
+     * @param1 The name of vertex
+     * @returns The List of Out vertex, which obey k-nearest principle
+     */
+    public List<MyPair> returnAllInNeighbour(String vertex){
+        List<MyPair> allNeighbours = new ArrayList<>();
+        String neighbour;
+        int weightOfEdge;
+
+        for(String e:edgeMap.keySet()){
+            if(e.contains(vertex)&&edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)]<0){
+                if(e.endsWith(vertex))
+                    neighbour = e.substring(0,1);
+                else neighbour = e.substring(1);
+                weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
+                allNeighbours.add(new MyPair(neighbour,weightOfEdge));
+            }
+        }return allNeighbours;
+    }
+
+
+    /**
      * Return Out All Neighbours
      *
      * @param1 The name of vertex
@@ -236,13 +279,14 @@ public class MatrixDataStructure {
 
         for(String e:edgeMap.keySet()){
             if(e.contains(vertex)){
-                        neighbour = e.substring(1);
-                        weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
-                        allNeighbours.add(new MyPair(neighbour,weightOfEdge));
-                    }
-                }return allNeighbours;
+                if(e.endsWith(vertex))
+                    neighbour = e.substring(0,1);
+                else neighbour = e.substring(1);
+                weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
+                allNeighbours.add(new MyPair(neighbour,weightOfEdge));
             }
-
+        }return allNeighbours;
+    }
 
 
     /**
@@ -277,7 +321,7 @@ public class MatrixDataStructure {
      */
     public int checkMaxInK(String vertex) {
         int maxInK = 0;
-        for (MyPair e : this.returnAllNeighbour(vertex)){
+        for (MyPair e : this.returnAllInNeighbour(vertex)){
             if (e.getValue() < 0)
                 maxInK++;
         }return maxInK;
@@ -292,9 +336,9 @@ public class MatrixDataStructure {
      */
     public int checkMaxOutK(String vertex) {
         int maxOutK = 0;
-        for (MyPair e : this.returnAllNeighbour(vertex)){
-            if (e.getValue() > 0)
+        for (MyPair e : this.returnAllOutNeighbour(vertex)){
                 maxOutK++;
         }return maxOutK;
     }
+
 }
