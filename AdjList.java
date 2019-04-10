@@ -114,7 +114,12 @@ public class AdjList extends AbstractAssocGraph {
     } // end of outNearestNeighbours()
 
     public void printVertices(PrintWriter os) {
-        // Implement me!
+        String delimiter = " ";
+        StringJoiner joiner = new StringJoiner(delimiter);
+        for (String key : vertToIndex.keySet()) {
+            joiner.add(key);
+        }
+        os.println(joiner.toString());
     } // end of printVertices()
 
     public void printEdges(PrintWriter os) {
