@@ -82,6 +82,9 @@ public class IncidenceMatrix extends AbstractAssocGraph {
             return neighbours;
         } else if(k == -1)
             return matrixDataStructure.returnAllNeighbour(vertLabel);
+        else if(k>matrixDataStructure.checkMaxInK(vertLabel)){
+            System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxInK(vertLabel));
+            return neighbours;}
         else
             return matrixDataStructure.returnInKnearestNeighbour(k, vertLabel);
     } // end of inNearestNeighbours()
@@ -93,10 +96,13 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         if (!matrixDataStructure.hasVertex(vertLabel)) {
             System.err.println("The vertex does not exist");
             return neighbours;
-        } else if(k == -1)
+        } else if(k == -1) {
             return matrixDataStructure.returnAllNeighbour(vertLabel);
-        else
-            return matrixDataStructure.returnOutKnearestNeighbour(k, vertLabel);
+        }
+        else if(k>matrixDataStructure.checkMaxOutK(vertLabel)){
+            System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxOutK(vertLabel));
+            return neighbours;}
+        else return matrixDataStructure.returnOutKnearestNeighbour(k, vertLabel);
     } // end of outNearestNeighbours()
 
 

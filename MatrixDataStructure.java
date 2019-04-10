@@ -10,7 +10,6 @@ public class MatrixDataStructure {
     public Map<String, Integer> vertexMap;
     public Map<String, Integer> edgeMap;
     public int[][] edgeWeightArray;
-    public MyPair mypair;
 
 
 
@@ -269,4 +268,33 @@ public class MatrixDataStructure {
         }
     }
 
+
+    /**
+     * Return the number of In-k of a vertex
+     *
+     * @param1 name of the vertex
+     * @returns return the max number of in-k
+     */
+    public int checkMaxInK(String vertex) {
+        int maxInK = 0;
+        for (MyPair e : this.returnAllNeighbour(vertex)){
+            if (e.getValue() < 0)
+                maxInK++;
+        }return maxInK;
+    }
+
+
+    /**
+     * Return the number of Out-k of a vertex
+     *
+     * @param1 name of the vertex
+     * @returns return the max number of Out-k
+     */
+    public int checkMaxOutK(String vertex) {
+        int maxOutK = 0;
+        for (MyPair e : this.returnAllNeighbour(vertex)){
+            if (e.getValue() > 0)
+                maxOutK++;
+        }return maxOutK;
+    }
 }
