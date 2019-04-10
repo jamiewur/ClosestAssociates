@@ -259,15 +259,13 @@ public class MatrixDataStructure {
 
         for(String e:edgeMap.keySet()){
             if(e.contains(vertex)){
-                for(String a: vertexMap.keySet()){
-                        neighbour = a;
-                        weightOfEdge = edgeWeightArray[vertexMap.get(a)][edgeMap.get(e)];
+                        neighbour = e.substring(1);
+                        weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
                         allNeighbours.add(new MyPair(neighbour,weightOfEdge));
                     }
-                }
+                }return allNeighbours;
             }
-        return allNeighbours;
-    }
+
 
 
     /**
