@@ -5,7 +5,7 @@
  *
  * @author Jeffrey Chan, 2019
  */
-class MyPair {
+class MyPair implements Comparable<MyPair> {
 
     private String mVert;
     private Integer mWeight;
@@ -29,6 +29,19 @@ class MyPair {
 
     public void setValue(Integer mWeight) {
         this.mWeight = mWeight;
+    }
+
+    @Override
+    public int compareTo(MyPair pair) {
+        int thisValue = mWeight.intValue();
+        int otherValue = pair.getValue().intValue();
+        if (thisValue == otherValue) {
+            return 0;
+        } else if (thisValue > otherValue) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
 } // end of class MyPair
