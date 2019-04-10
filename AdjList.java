@@ -75,10 +75,4 @@ public class AdjList extends AbstractAssocGraph
         // Implement me!
     } // end of printEdges()
 
-
-    protected class Node {
-    	public Node() {
-
-    	}
-    }
 } // end of class AdjList
