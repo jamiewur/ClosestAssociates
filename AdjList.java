@@ -123,7 +123,14 @@ public class AdjList extends AbstractAssocGraph {
     } // end of printVertices()
 
     public void printEdges(PrintWriter os) {
-        // Implement me!
+        for (Map.Entry<String, Integer> entry : vertToIndex.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            List<MyPair> edges = rows[value.intValue()].getAllValues();
+            for (MyPair edge : edges) {
+                os.println(key + " " + edge.getKey() + " " + edge.getValue());
+            }
+        }
     } // end of printEdges()
 
     private void updateArrayLength() {
