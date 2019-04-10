@@ -97,11 +97,17 @@ public class AdjList extends AbstractAssocGraph {
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-
-        // Implement me!
-
-        return neighbours;
+        List<MyPair> neighbours = new ArrayList<>();
+        MyLinkedList srcVertList = getListOfEdgesForVert(vertLabel);
+        if (srcVertList == null) {
+            return neighbours;
+        }
+        neighbours.addAll(srcVertList.getAllValues());
+        if (neighbours.size() < k || k == -1) {
+            return neighbours;
+        }
+        Collections.sort(neighbours, Collections.reverseOrder());
+        return neighbours.subList(0, k - 1);
     } // end of outNearestNeighbours()
 
     public void printVertices(PrintWriter os) {
