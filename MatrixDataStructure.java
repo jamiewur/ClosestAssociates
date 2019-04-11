@@ -2,8 +2,6 @@ import java.util.*;
 
 public class MatrixDataStructure {
 
-    private int numbOfVertex = 0;
-    private int numbOfEdges = 0;
     private int indexOfVertex = 0;
     private int indexOfEdges = 0;
     private Map<String, Integer> vertexMap;
@@ -35,8 +33,8 @@ public class MatrixDataStructure {
      * @param vertexName String Name of the new Vertex
      */
     public void addVertex(String vertexName) {
+        // TODO: Auto resize array
         vertexMap.put(vertexName, indexOfVertex);
-        numbOfVertex++;
         indexOfVertex++;
     }
 
@@ -61,12 +59,10 @@ public class MatrixDataStructure {
      */
     public void addEdge(String srcLabel, String tarLabel, int weight) {
         String edgeName = createEdgeName(srcLabel, tarLabel);
-
         edgeMap.put(edgeName, indexOfEdges);
         // TODO: Auto resize array
         edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(tarLabel)][edgeMap.get(edgeName)] = -weight;
-        numbOfEdges++;
         indexOfEdges++;
     }
 
@@ -90,7 +86,6 @@ public class MatrixDataStructure {
      * @param3 weight is the weight of the edge
      */
     public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
-
         String edgeName = createEdgeName(srcLabel, tarLabel);
         edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(tarLabel)][edgeMap.get(edgeName)] = -weight;
@@ -104,9 +99,6 @@ public class MatrixDataStructure {
     public void removeVertex(String vertex) {
         edgeMap.entrySet().removeIf(item -> item.getKey().contains(vertex));
         vertexMap.remove(vertex);
-
-        numbOfVertex--;
-        numbOfEdges--;
     }
 
     /**
@@ -117,12 +109,11 @@ public class MatrixDataStructure {
      */
     public void removeEdge(String srcLabel, String tarLabel) {
         String edgeName = createEdgeName(srcLabel, tarLabel);
-        int edgeMapValue = edgeMap.get(edgeName);
-        for (int a : vertexMap.values()) {
-            edgeWeightArray[a][edgeMapValue] = 0;
+        int edgeMapIndex = edgeMap.get(edgeName);
+        for (int i : vertexMap.values()) {
+            edgeWeightArray[i][edgeMapIndex] = 0;
         }
         edgeMap.remove(edgeName);
-        numbOfEdges--;
     }
 
     /**

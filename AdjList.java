@@ -12,7 +12,6 @@ public class AdjList extends AbstractAssocGraph {
 
     private Map<String, Integer> vertToIndex;
     private MyLinkedList[] rows;
-    private int numOfVerts;
     private int pointer = 0; // Keep track of next vertex index
 
     /**
@@ -21,7 +20,6 @@ public class AdjList extends AbstractAssocGraph {
     public AdjList() {
         vertToIndex = new HashMap<>();
         rows = new MyLinkedList[30];
-        numOfVerts = 0;
     } // end of AdjList()
 
     public void addVertex(String vertLabel) {
@@ -32,7 +30,6 @@ public class AdjList extends AbstractAssocGraph {
         vertToIndex.put(vertLabel, pointer);
         rows[pointer] = new MyLinkedList();
         pointer++;
-        numOfVerts++;
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
@@ -88,7 +85,6 @@ public class AdjList extends AbstractAssocGraph {
                 edges.remove(vertLabel);
             }
         }
-        numOfVerts--;
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
