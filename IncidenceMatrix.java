@@ -106,8 +106,12 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of printVertices()
 
     public void printEdges(PrintWriter os) {
-        for (String a : matrix.getEdgeMap().keySet()) {
-            os.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrix.getEdgeWeightArray()[matrix.getVertexMap().get(a.substring(0, 1))][matrix.getEdgeMap().get(a)]);
+        for (String edgeName : matrix.getEdgeMap().keySet()) {
+            String[] vertices = edgeName.split("-");
+            String srcLabel = vertices[0];
+            String tarLabel = vertices[1];
+            int weight = matrix.getEdgeWeight(srcLabel, tarLabel);
+            os.println(srcLabel + " " + tarLabel + " " + weight);
         }
     }
 
