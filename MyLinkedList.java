@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// A singly linked list implementation
 public class MyLinkedList {
 
     private Node head;
@@ -75,6 +76,7 @@ public class MyLinkedList {
         return false;
     }
 
+    // Return all values (MyPair) in the list
     public List<MyPair> getAllValues() {
         if (length == 0) {
             return new ArrayList<>();
@@ -104,10 +106,6 @@ public class MyLinkedList {
 
         public Node getNext() {
             return next;
-        }
-
-        public void setValue(MyPair value) {
-            this.value = value;
         }
 
         public void setNext(Node next) {

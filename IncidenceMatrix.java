@@ -4,126 +4,115 @@ import java.util.*;
 
 /**
  * Incident matrix implementation for the AssociationGraph interface.
- *
+ * <p>
  * Your task is to complete the implementation of this class.  You may add methods, but ensure your modified class compiles and runs.
  *
  * @author Jeffrey Chan, 2019.
  */
 public class IncidenceMatrix extends AbstractAssocGraph {
 
-    private static final int EDGE_NOT_EXIST = -1;
-    MatrixDataStructure matrixDataStructure = new MatrixDataStructure();
+    private final MatrixDataStructure matrix;
 
     /**
      * Contructs empty graph.
      */
     public IncidenceMatrix() {
-        // Implement me!
+        matrix = new MatrixDataStructure();
     } // end of IncidentMatrix()
 
-
     public void addVertex(String vertLabel) {
-        // Implement me!
-        if (matrixDataStructure.hasVertex(vertLabel))
-            return;
-        else matrixDataStructure.addVertex(vertLabel);
+        if (matrix.hasVertex(vertLabel)) {
+            throw new IllegalArgumentException("Vertex already exists.");
+        }
+        matrix.addVertex(vertLabel);
     } // end of addVertex()
 
-
     public void addEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
-        if (!matrixDataStructure.hasVertex(srcLabel) && matrixDataStructure.hasVertex(tarLabel)) {
-            System.err.println("One or two vertex does not exit");
-            return;
+        if (!matrix.hasVertex(srcLabel)) {
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot add edge.");
         }
-        else if (matrixDataStructure.edgeMap.containsKey(srcLabel+tarLabel))
-            return;
-        else matrixDataStructure.addEdge(srcLabel, tarLabel, weight);
+        if (matrix.hasEdge(srcLabel, tarLabel)) {
+            throw new IllegalArgumentException("Edge already exists. Considering updating the weight.");
+        }
+        matrix.addEdge(srcLabel, tarLabel, weight);
     } // end of addEdge()
 
-
     public int getEdgeWeight(String srcLabel, String tarLabel) {
-        // Implement me!
-        if (!matrixDataStructure.hasEdge(srcLabel, tarLabel))
+        if (!matrix.hasVertex(srcLabel)) {
             return EDGE_NOT_EXIST;
-        else
-            return matrixDataStructure.getEdgeWeight(srcLabel, tarLabel);
+        }
+        if (!matrix.hasEdge(srcLabel, tarLabel)) {
+            return EDGE_NOT_EXIST;
+        }
+        return matrix.getEdgeWeight(srcLabel, tarLabel);
     } // end of existEdge()
 
-
     public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
-
-        if (!matrixDataStructure.hasVertex(srcLabel) && matrixDataStructure.hasVertex(tarLabel)) {
-            System.err.println("One or two vertex does not exit");
+        if (!matrix.hasVertex(srcLabel)) {
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot update edge weight.");
+        }
+        if (!matrix.hasEdge(srcLabel, tarLabel)) {
+            throw new IllegalArgumentException("Edge doesn't exist. Cannot update weight.");
+        }
+        if (weight == 0) {
+            matrix.removeEdge(srcLabel, tarLabel);
             return;
-        } else if (!matrixDataStructure.hasEdge(srcLabel, tarLabel)) {
-            System.err.println("The edge does not exist");
-            return;
-        } else if (weight != 0)
-            matrixDataStructure.updateWeightEdge(srcLabel, tarLabel, weight);
-        else matrixDataStructure.removeEdge(srcLabel, tarLabel);
-
+        }
+        matrix.updateWeightEdge(srcLabel, tarLabel, weight);
 
     } // end of updateWeightEdge()
 
-
     public void removeVertex(String vertLabel) {
-        // Implement me!
-        if (!matrixDataStructure.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return;
-        } else matrixDataStructure.removeVertex(vertLabel);
+        if (!matrix.hasVertex(vertLabel)) {
+            throw new IllegalArgumentException("The vertex does not exist.");
+        }
+        matrix.removeVertex(vertLabel);
     } // end of removeVertex()
 
-
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-        // Implement me!
-        if (!matrixDataStructure.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return neighbours;
-        } else if(k == -1)
-            return matrixDataStructure.returnAllInNeighbour(vertLabel);
-        else if(k>matrixDataStructure.checkMaxInK(vertLabel)){
-            System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxInK(vertLabel));
-            return matrixDataStructure.returnInKnearestNeighbour(matrixDataStructure.checkMaxInK(vertLabel), vertLabel);}
-        else
-            return matrixDataStructure.returnInKnearestNeighbour(k, vertLabel);
+        if (!matrix.hasVertex(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
+        List<MyPair> neighbors = matrix.returnAllInNeighbour(vertLabel);
+        return getKNearestNeighbors(k, neighbors);
     } // end of inNearestNeighbours()
 
-
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-        // Implement me!
-        if (!matrixDataStructure.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return neighbours;
-        } else if(k == -1) {
-            return matrixDataStructure.returnAllOutNeighbour(vertLabel);
+        if (!matrix.hasVertex(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
         }
-        else if(k>matrixDataStructure.checkMaxOutK(vertLabel)){
-            System.out.println("The max number of k of vertex "+vertLabel+" is "+ matrixDataStructure.checkMaxOutK(vertLabel));
-            return matrixDataStructure.returnOutKnearestNeighbour(matrixDataStructure.checkMaxOutK(vertLabel), vertLabel);}
-        else return matrixDataStructure.returnOutKnearestNeighbour(k, vertLabel);
+        List<MyPair> neighbors = matrix.returnAllOutNeighbour(vertLabel);
+        return getKNearestNeighbors(k, neighbors);
     } // end of outNearestNeighbours()
-
 
     public void printVertices(PrintWriter os) {
         String delimiter = " ";
         StringJoiner stringJoiner = new StringJoiner(delimiter);
-        for(String ver:matrixDataStructure.vertexMap.keySet()){
+        for (String ver : matrix.getVertexMap().keySet()) {
             stringJoiner.add(ver);
         }
         os.println(stringJoiner.toString());
     } // end of printVertices()
 
-
     public void printEdges(PrintWriter os) {
-            for (String a : matrixDataStructure.edgeMap.keySet()) {
-                os.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrixDataStructure.edgeWeightArray[matrixDataStructure.vertexMap.get(a.substring(0, 1))][matrixDataStructure.edgeMap.get(a)]);
+        for (String edgeName : matrix.getEdgeMap().keySet()) {
+            String[] vertices = edgeName.split("-");
+            String srcLabel = vertices[0];
+            String tarLabel = vertices[1];
+            int weight = matrix.getEdgeWeight(srcLabel, tarLabel);
+            os.println(srcLabel + " " + tarLabel + " " + weight);
         }
+    }
 
+    private List<MyPair> getKNearestNeighbors(int k, List<MyPair> neighbours) {
+        // If total number of neighbors is less than k or k equals -1
+        // then return all the neighbors
+        if (neighbours.size() < k || k == -1) {
+            return neighbours;
+        }
+        // Sort and return the top k neighbors
+        Collections.sort(neighbours, Collections.reverseOrder());
+        return neighbours.subList(0, k);
     }
 
 }

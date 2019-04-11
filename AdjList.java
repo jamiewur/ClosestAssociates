@@ -10,9 +10,8 @@ import java.util.*;
  */
 public class AdjList extends AbstractAssocGraph {
 
-    private HashMap<String, Integer> vertToIndex;
+    private Map<String, Integer> vertToIndex;
     private MyLinkedList[] rows;
-    private int numOfVerts;
     private int pointer = 0; // Keep track of next vertex index
 
     /**
@@ -21,15 +20,16 @@ public class AdjList extends AbstractAssocGraph {
     public AdjList() {
         vertToIndex = new HashMap<>();
         rows = new MyLinkedList[30];
-        numOfVerts = 0;
     } // end of AdjList()
 
     public void addVertex(String vertLabel) {
+        if (vertToIndex.containsKey(vertLabel)) {
+            throw new IllegalArgumentException("Vertex already exits.");
+        }
         updateArrayLength();
         vertToIndex.put(vertLabel, pointer);
         rows[pointer] = new MyLinkedList();
         pointer++;
-        numOfVerts++;
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
@@ -85,10 +85,12 @@ public class AdjList extends AbstractAssocGraph {
                 edges.remove(vertLabel);
             }
         }
-        numOfVerts--;
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
+        if (!vertToIndex.containsKey(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
         List<MyPair> neighbours = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : vertToIndex.entrySet()) {
             String key = entry.getKey();
@@ -104,6 +106,9 @@ public class AdjList extends AbstractAssocGraph {
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
+        if (!vertToIndex.containsKey(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
         List<MyPair> neighbours = new ArrayList<>();
         MyLinkedList srcVertList = getListOfEdgesForVert(vertLabel);
         if (srcVertList == null) {
