@@ -33,6 +33,7 @@ public class MatrixDataStructure {
         return vertexMap.containsKey(vertexName);
     }
 
+
     /**
      * Add a new vertex
      *
@@ -40,11 +41,12 @@ public class MatrixDataStructure {
      */
     public void addVertex(String vertexName) {
 
-        vertexMap.put(vertexName,numbOfVertex);
+        vertexMap.put(vertexName,indexOfVertex);
 
         numbOfVertex++;
         indexOfVertex++;
     }
+
 
     /**
      * Judgement of whether has the edge
@@ -59,6 +61,7 @@ public class MatrixDataStructure {
         return edgeMap.containsKey(edgeName);
          }
 
+
     /**
      * Add a new edge
      *
@@ -69,12 +72,13 @@ public class MatrixDataStructure {
     public void addEdge(String vertex1, String vertex2, int weight) {
 
         String edgeName = vertex1 + vertex2;
-        edgeMap.put(edgeName,numbOfEdges);
+        edgeMap.put(edgeName,indexOfVertex);
         edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
         numbOfEdges++;
         indexOfEdges++;
     }
+
 
     /**
      * Return the weight of the edge
@@ -103,26 +107,29 @@ public class MatrixDataStructure {
         edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
     }
 
+
     /**
      * Remove the vertex
      *
      * @param1 vertex is the vertex name
      */
     public void removeVertex (String vertex) {
-
-        for(String edge:edgeMap.keySet()
-             ) {if(edge.contains(vertex))
+        String [] relativeEdges = new String[100];
+        for(String edge:edgeMap.keySet()) {
+            if(edge.contains(vertex))
                  for(int ver: vertexMap.values())
                  edgeWeightArray[ver][edgeMap.get(edge)] = 0;
         }
         vertexMap.remove(vertex);
-        for (String edge:edgeMap.keySet()
-             ) {if(edge.contains(vertex))
-                 vertexMap.remove(edge);
+
+        for (String edge:edgeMap.keySet()) {
+            if(edge.contains(vertex))
+
         }
         numbOfVertex--;
         numbOfEdges--;
     }
+
 
     /**
      * Remove the vertex
@@ -139,6 +146,7 @@ public class MatrixDataStructure {
         edgeMap.remove(edgeName);
         numbOfEdges--;
     }
+
 
     /**
      * Return In K-nearest Neighbours

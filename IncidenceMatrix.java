@@ -109,15 +109,19 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     public void printVertices(PrintWriter os) {
         // Implement me!
         for(String a:matrixDataStructure.vertexMap.keySet()){
-            os.print(a);
+            System.out.print(a+" ");
         }
     } // end of printVertices()
 
 
     public void printEdges(PrintWriter os) {
         // Implement me!
-        for(String a:matrixDataStructure.edgeMap.keySet()){
-            os.print(a);
+        try {
+            for (String a : matrixDataStructure.edgeMap.keySet()) {
+                System.out.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrixDataStructure.edgeWeightArray[matrixDataStructure.vertexMap.get(a.substring(0, 1))][matrixDataStructure.edgeMap.get(a)]);
+            }
+        }catch (Exception e){
+            e.getStackTrace();
         }
     } // end of printEdges()
 
