@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class IncidenceMatrix extends AbstractAssocGraph {
 
-    MatrixDataStructure matrix;
+    private MatrixDataStructure matrix;
 
     /**
      * Contructs empty graph.
@@ -30,7 +30,7 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         if (!matrix.hasVertex(srcLabel) && matrix.hasVertex(tarLabel)) {
             System.err.println("One or two vertex does not exit");
             return;
-        } else if (matrix.edgeMap.containsKey(srcLabel + tarLabel))
+        } else if (matrix.getEdgeMap().containsKey(srcLabel + tarLabel))
             return;
         else matrix.addEdge(srcLabel, tarLabel, weight);
     } // end of addEdge()
@@ -91,15 +91,15 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     public void printVertices(PrintWriter os) {
         String delimiter = " ";
         StringJoiner stringJoiner = new StringJoiner(delimiter);
-        for (String ver : matrix.vertexMap.keySet()) {
+        for (String ver : matrix.getVertexMap().keySet()) {
             stringJoiner.add(ver);
         }
         os.println(stringJoiner.toString());
     } // end of printVertices()
 
     public void printEdges(PrintWriter os) {
-        for (String a : matrix.edgeMap.keySet()) {
-            os.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrix.edgeWeightArray[matrix.vertexMap.get(a.substring(0, 1))][matrix.edgeMap.get(a)]);
+        for (String a : matrix.getEdgeMap().keySet()) {
+            os.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrix.getEdgeWeightArray()[matrix.getVertexMap().get(a.substring(0, 1))][matrix.getEdgeMap().get(a)]);
         }
     }
 

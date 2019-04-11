@@ -2,14 +2,15 @@ import java.util.*;
 
 public class MatrixDataStructure {
 
-    public int numbOfVertex = 0;
-    public int numbOfEdges = 0;
-    public int indexOfVertex = 0;
-    public int indexOfEdges = 0;
-    public Map<String, Integer> vertexMap;
-    public Map<String, Integer> edgeMap;
-    public int[][] edgeWeightArray;
+    private int numbOfVertex = 0;
+    private int numbOfEdges = 0;
+    private int indexOfVertex = 0;
+    private int indexOfEdges = 0;
+    private Map<String, Integer> vertexMap;
 
+    private Map<String, Integer> edgeMap;
+
+    private int[][] edgeWeightArray;
     /**
      * Constructor by default
      */
@@ -295,6 +296,18 @@ public class MatrixDataStructure {
             maxOutK++;
         }
         return maxOutK;
+    }
+
+    public Map<String, Integer> getVertexMap() {
+        return vertexMap;
+    }
+
+    public Map<String, Integer> getEdgeMap() {
+        return edgeMap;
+    }
+
+    public int[][] getEdgeWeightArray() {
+        return edgeWeightArray;
     }
 
 }
