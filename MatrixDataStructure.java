@@ -258,7 +258,7 @@ public class MatrixDataStructure {
                 if(e.endsWith(vertex))
                     neighbour = e.substring(0,1);
                 else neighbour = e.substring(1);
-                weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
+                weightOfEdge = -edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
                 allNeighbours.add(new MyPair(neighbour,weightOfEdge));
             }
         }return allNeighbours;

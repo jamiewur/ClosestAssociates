@@ -35,7 +35,10 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         if (!matrixDataStructure.hasVertex(srcLabel) && matrixDataStructure.hasVertex(tarLabel)) {
             System.err.println("One or two vertex does not exit");
             return;
-        } else matrixDataStructure.addEdge(srcLabel, tarLabel, weight);
+        }
+        else if (matrixDataStructure.edgeMap.containsKey(srcLabel+tarLabel))
+            return;
+        else matrixDataStructure.addEdge(srcLabel, tarLabel, weight);
     } // end of addEdge()
 
 
