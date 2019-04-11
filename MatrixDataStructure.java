@@ -14,7 +14,7 @@ public class MatrixDataStructure {
     public MatrixDataStructure() {
         vertexMap = new HashMap<>();
         edgeMap = new HashMap<>();
-        edgeWeightArray = new int[100][100];
+        edgeWeightArray = new int[30][30];
     }
 
     /**
@@ -33,7 +33,14 @@ public class MatrixDataStructure {
      * @param vertexName String Name of the new Vertex
      */
     public void addVertex(String vertexName) {
-        // TODO: Auto resize array
+        int currNumRows = edgeWeightArray.length;
+        if (currNumRows - indexOfVertex <= 5) {
+            // Increase array size by 25 when the difference between current size and vertex index
+            // is smaller than or equal to 5
+            int newNumRows = currNumRows + 25;
+            int currNumCols = edgeWeightArray[0].length;
+            edgeWeightArray = updateArraySize(edgeWeightArray, newNumRows, currNumCols);
+        }
         vertexMap.put(vertexName, indexOfVertex);
         indexOfVertex++;
     }
@@ -58,9 +65,16 @@ public class MatrixDataStructure {
      * @param3 weight is the weight of the edge
      */
     public void addEdge(String srcLabel, String tarLabel, int weight) {
+        int currNumCols = edgeWeightArray[0].length;
+        if (currNumCols - indexOfEdges <= 5) {
+            // Increase array size by 25 when the difference between current size and edge index
+            // is smaller than or equal to 5
+            int newNumCols = currNumCols + 25;
+            int currNumRows = edgeWeightArray.length;
+            edgeWeightArray = updateArraySize(edgeWeightArray, currNumRows, newNumCols);
+        }
         String edgeName = createEdgeName(srcLabel, tarLabel);
         edgeMap.put(edgeName, indexOfEdges);
-        // TODO: Auto resize array
         edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(tarLabel)][edgeMap.get(edgeName)] = -weight;
         indexOfEdges++;
@@ -176,6 +190,14 @@ public class MatrixDataStructure {
 
     private String createEdgeName(String srcLabel, String tarLabel) {
         return srcLabel + "-" + tarLabel;
+    }
+
+    private static int[][] updateArraySize(int[][] original, int newNumRows, int newNumCols) {
+        int[][] newArray = new int[newNumRows][newNumCols];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, newArray[i], 0, Math.min(original[i].length, newNumCols));
+        }
+        return newArray;
     }
 
 }
