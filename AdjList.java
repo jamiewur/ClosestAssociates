@@ -32,7 +32,7 @@ public class AdjList extends AbstractAssocGraph {
         numOfVerts++;
     } // end of addVertex()
 
-    public void addEdge(String srcLabel, String tarLabel, int weight) throws IllegalArgumentException {
+    public void addEdge(String srcLabel, String tarLabel, int weight) {
         MyPair newEdge = new MyPair(tarLabel, weight);
         MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
         if (srcVertList == null) {
@@ -57,7 +57,7 @@ public class AdjList extends AbstractAssocGraph {
         return edge.getValue();
     } // end of existEdge()
 
-    public void updateWeightEdge(String srcLabel, String tarLabel, int weight) throws IllegalArgumentException {
+    public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
         MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
         if (srcVertList == null) {
             throw new IllegalArgumentException("Source vertex doesn't exist. Cannot update edge weight.");
