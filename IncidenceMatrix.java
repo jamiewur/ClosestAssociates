@@ -21,9 +21,11 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of IncidentMatrix()
 
     public void addVertex(String vertLabel) {
-        if (matrix.hasVertex(vertLabel))
+        if (matrix.hasVertex(vertLabel)) {
             return;
-        else matrix.addVertex(vertLabel);
+        } else {
+            matrix.addVertex(vertLabel);
+        }
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
