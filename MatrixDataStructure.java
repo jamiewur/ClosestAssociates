@@ -7,10 +7,9 @@ public class MatrixDataStructure {
     private int indexOfVertex = 0;
     private int indexOfEdges = 0;
     private Map<String, Integer> vertexMap;
-
     private Map<String, Integer> edgeMap;
-
     private int[][] edgeWeightArray;
+
     /**
      * Constructor by default
      */
@@ -49,7 +48,7 @@ public class MatrixDataStructure {
      * @returns Whether has the edge If edge doesn't exist, return false,else return true;
      */
     public boolean hasEdge(String vertex1, String vertex2) {
-        String edgeName = vertex1 + vertex2;
+        String edgeName = createEdgeName(vertex1, vertex2);
         return edgeMap.containsKey(edgeName);
     }
 
@@ -61,8 +60,10 @@ public class MatrixDataStructure {
      * @param3 weight is the weight of the edge
      */
     public void addEdge(String vertex1, String vertex2, int weight) {
-        String edgeName = vertex1 + vertex2;
+        String edgeName = createEdgeName(vertex1, vertex2);
+
         edgeMap.put(edgeName, indexOfEdges);
+        // TODO: Auto resize array
         edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
         numbOfEdges++;
@@ -77,7 +78,7 @@ public class MatrixDataStructure {
      * @param3 weight is the weight of the edge
      */
     public int getEdgeWeight(String vertex1, String vertex2) {
-        String edgeName = vertex1 + vertex2;
+        String edgeName = createEdgeName(vertex1, vertex2);
         return edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)];
     }
 
@@ -90,7 +91,7 @@ public class MatrixDataStructure {
      */
     public void updateWeightEdge(String vertex1, String vertex2, int weight) {
 
-        String edgeName = vertex1 + vertex2;
+        String edgeName = createEdgeName(vertex1, vertex2);
         edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
     }
@@ -115,7 +116,7 @@ public class MatrixDataStructure {
      * @param2 vertex2 is second vertex name
      */
     public void removeEdge(String vertex1, String vertex2) {
-        String edgeName = vertex1 + vertex2;
+        String edgeName = createEdgeName(vertex1, vertex2);
         int edgeMapValue = edgeMap.get(edgeName);
         for (int a : vertexMap.values()) {
             edgeWeightArray[a][edgeMapValue] = 0;
@@ -310,4 +311,7 @@ public class MatrixDataStructure {
         return edgeWeightArray;
     }
 
+    private String createEdgeName(String vertex1, String vertex2) {
+        return vertex1 + "-" + vertex2;
+    }
 }
