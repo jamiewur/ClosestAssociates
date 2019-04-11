@@ -156,7 +156,7 @@ public class AdjList extends AbstractAssocGraph {
             return neighbours;
         }
         Collections.sort(neighbours, Collections.reverseOrder());
-        return neighbours.subList(0, k - 1);
+        return neighbours.subList(0, k);
     }
 
 } // end of class AdjList
