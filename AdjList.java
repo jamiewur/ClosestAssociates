@@ -88,6 +88,9 @@ public class AdjList extends AbstractAssocGraph {
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
+        if (!vertToIndex.containsKey(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
         List<MyPair> neighbours = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : vertToIndex.entrySet()) {
             String key = entry.getKey();
@@ -103,6 +106,9 @@ public class AdjList extends AbstractAssocGraph {
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
+        if (!vertToIndex.containsKey(vertLabel)) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
         List<MyPair> neighbours = new ArrayList<>();
         MyLinkedList srcVertList = getListOfEdgesForVert(vertLabel);
         if (srcVertList == null) {

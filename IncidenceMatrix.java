@@ -70,11 +70,11 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
         if (!matrix.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return neighbours;
-        } else if (k == -1)
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
+        List<MyPair> neighbours = new ArrayList<>();
+        if (k == -1)
             return matrix.returnAllInNeighbour(vertLabel);
         else if (k > matrix.checkMaxInK(vertLabel)) {
             System.out.println("The max number of k of vertex " + vertLabel + " is " + matrix.checkMaxInK(vertLabel));
@@ -84,11 +84,11 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
         if (!matrix.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return neighbours;
-        } else if (k == -1) {
+            throw new IllegalArgumentException("Vertex doesn't exist.");
+        }
+        List<MyPair> neighbours = new ArrayList<>();
+        if (k == -1) {
             return matrix.returnAllOutNeighbour(vertLabel);
         } else if (k > matrix.checkMaxOutK(vertLabel)) {
             System.out.println("The max number of k of vertex " + vertLabel + " is " + matrix.checkMaxOutK(vertLabel));
