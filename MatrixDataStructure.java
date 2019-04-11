@@ -47,25 +47,25 @@ public class MatrixDataStructure {
      * @param2 The second vertex name
      * @returns Whether has the edge If edge doesn't exist, return false,else return true;
      */
-    public boolean hasEdge(String vertex1, String vertex2) {
-        String edgeName = createEdgeName(vertex1, vertex2);
+    public boolean hasEdge(String srcLabel, String tarLabel) {
+        String edgeName = createEdgeName(srcLabel, tarLabel);
         return edgeMap.containsKey(edgeName);
     }
 
     /**
      * Add a new edge
      *
-     * @param1 vertex1 is the source vertex name
-     * @param2 vertex2 is the target vertex name
+     * @param1 srcLabel is the source vertex name
+     * @param2 tarLabel is the target vertex name
      * @param3 weight is the weight of the edge
      */
-    public void addEdge(String vertex1, String vertex2, int weight) {
-        String edgeName = createEdgeName(vertex1, vertex2);
+    public void addEdge(String srcLabel, String tarLabel, int weight) {
+        String edgeName = createEdgeName(srcLabel, tarLabel);
 
         edgeMap.put(edgeName, indexOfEdges);
         // TODO: Auto resize array
-        edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
-        edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
+        edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)] = weight;
+        edgeWeightArray[vertexMap.get(tarLabel)][edgeMap.get(edgeName)] = -weight;
         numbOfEdges++;
         indexOfEdges++;
     }
@@ -73,27 +73,27 @@ public class MatrixDataStructure {
     /**
      * Return the weight of the edge
      *
-     * @param1 vertex1 is the source vertex name
-     * @param2 vertex2 is the target vertex name
+     * @param1 srcLabel is the source vertex name
+     * @param2 tarLabel is the target vertex name
      * @param3 weight is the weight of the edge
      */
-    public int getEdgeWeight(String vertex1, String vertex2) {
-        String edgeName = createEdgeName(vertex1, vertex2);
-        return edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)];
+    public int getEdgeWeight(String srcLabel, String tarLabel) {
+        String edgeName = createEdgeName(srcLabel, tarLabel);
+        return edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)];
     }
 
     /**
      * Update the weight of the edge
      *
-     * @param1 vertex1 is the source vertex name
-     * @param2 vertex2 is the target vertex name
+     * @param1 srcLabel is the source vertex name
+     * @param2 tarLabel is the target vertex name
      * @param3 weight is the weight of the edge
      */
-    public void updateWeightEdge(String vertex1, String vertex2, int weight) {
+    public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
 
-        String edgeName = createEdgeName(vertex1, vertex2);
-        edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
-        edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
+        String edgeName = createEdgeName(srcLabel, tarLabel);
+        edgeWeightArray[vertexMap.get(srcLabel)][edgeMap.get(edgeName)] = weight;
+        edgeWeightArray[vertexMap.get(tarLabel)][edgeMap.get(edgeName)] = -weight;
     }
 
     /**
@@ -112,11 +112,11 @@ public class MatrixDataStructure {
     /**
      * Remove the vertex
      *
-     * @param1 vertex1 is first vertex name
-     * @param2 vertex2 is second vertex name
+     * @param1 srcLabel is first vertex name
+     * @param2 tarLabel is second vertex name
      */
-    public void removeEdge(String vertex1, String vertex2) {
-        String edgeName = createEdgeName(vertex1, vertex2);
+    public void removeEdge(String srcLabel, String tarLabel) {
+        String edgeName = createEdgeName(srcLabel, tarLabel);
         int edgeMapValue = edgeMap.get(edgeName);
         for (int a : vertexMap.values()) {
             edgeWeightArray[a][edgeMapValue] = 0;
@@ -311,7 +311,7 @@ public class MatrixDataStructure {
         return edgeWeightArray;
     }
 
-    private String createEdgeName(String vertex1, String vertex2) {
-        return vertex1 + "-" + vertex2;
+    private String createEdgeName(String srcLabel, String tarLabel) {
+        return srcLabel + "-" + tarLabel;
     }
 }
