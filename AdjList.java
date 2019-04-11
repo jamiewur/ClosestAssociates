@@ -32,17 +32,15 @@ public class AdjList extends AbstractAssocGraph {
         numOfVerts++;
     } // end of addVertex()
 
-    public void addEdge(String srcLabel, String tarLabel, int weight) {
+    public void addEdge(String srcLabel, String tarLabel, int weight) throws IllegalArgumentException {
         MyPair newEdge = new MyPair(tarLabel, weight);
         MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
         if (srcVertList == null) {
-            System.out.println("Source vertex doesn't exist. Cannot add edge.");
-            return;
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot add edge.");
         }
         MyPair existingEdge = srcVertList.find(tarLabel);
         if (existingEdge != null) {
-            System.err.println("Edge already exists. Consider updating the weight.");
-            return;
+            throw new IllegalArgumentException("Edge already exists. Consider updating the weight.");
         }
         srcVertList.add(newEdge);
     } // end of addEdge()
@@ -59,16 +57,14 @@ public class AdjList extends AbstractAssocGraph {
         return edge.getValue();
     } // end of existEdge()
 
-    public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
+    public void updateWeightEdge(String srcLabel, String tarLabel, int weight) throws IllegalArgumentException {
         MyLinkedList srcVertList = getListOfEdgesForVert(srcLabel);
         if (srcVertList == null) {
-            System.out.println("Source vertex doesn't exist. Cannot update edge weight.");
-            return;
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot update edge weight.");
         }
         MyPair edge = srcVertList.find(tarLabel);
         if (edge == null) {
-            System.out.println("Edge doesn't exist. Cannot update weight.");
-            return;
+            throw new IllegalArgumentException("Edge doesn't exist. Cannot update weight.");
         }
         if (weight == 0) {
             srcVertList.remove(tarLabel);
