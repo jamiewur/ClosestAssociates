@@ -108,10 +108,6 @@ public class MyLinkedList {
             return next;
         }
 
-        public void setValue(MyPair value) {
-            this.value = value;
-        }
-
         public void setNext(Node next) {
             this.next = next;
         }
