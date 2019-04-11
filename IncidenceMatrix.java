@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class IncidenceMatrix extends AbstractAssocGraph {
 
-    private MatrixDataStructure matrix;
+    private final MatrixDataStructure matrix;
 
     /**
      * Contructs empty graph.
