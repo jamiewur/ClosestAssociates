@@ -70,6 +70,10 @@ public class AdjList extends AbstractAssocGraph {
             System.out.println("Edge doesn't exist. Cannot update weight.");
             return;
         }
+        if (weight == 0) {
+            srcVertList.remove(tarLabel);
+            return;
+        }
         edge.setValue(weight);
     } // end of updateWeightEdge()
 
