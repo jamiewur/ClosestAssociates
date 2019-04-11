@@ -105,9 +105,12 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     }
 
     private List<MyPair> getKNearestNeighbors(int k, List<MyPair> neighbours) {
+        // If total number of neighbors is less than k or k equals -1
+        // then return all the neighbors
         if (neighbours.size() < k || k == -1) {
             return neighbours;
         }
+        // Sort and return the top k neighbors
         Collections.sort(neighbours, Collections.reverseOrder());
         return neighbours.subList(0, k);
     }
