@@ -18,18 +18,15 @@ public class IncidenceMatrix extends AbstractAssocGraph {
      * Contructs empty graph.
      */
     public IncidenceMatrix() {
-        // Implement me!
     } // end of IncidentMatrix()
 
     public void addVertex(String vertLabel) {
-        // Implement me!
         if (matrixDataStructure.hasVertex(vertLabel))
             return;
         else matrixDataStructure.addVertex(vertLabel);
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
         if (!matrixDataStructure.hasVertex(srcLabel) && matrixDataStructure.hasVertex(tarLabel)) {
             System.err.println("One or two vertex does not exit");
             return;
@@ -39,7 +36,6 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of addEdge()
 
     public int getEdgeWeight(String srcLabel, String tarLabel) {
-        // Implement me!
         if (!matrixDataStructure.hasEdge(srcLabel, tarLabel))
             return EDGE_NOT_EXIST;
         else
@@ -47,8 +43,6 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of existEdge()
 
     public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
-        // Implement me!
-
         if (!matrixDataStructure.hasVertex(srcLabel) && matrixDataStructure.hasVertex(tarLabel)) {
             System.err.println("One or two vertex does not exit");
             return;
@@ -61,7 +55,6 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of updateWeightEdge()
 
     public void removeVertex(String vertLabel) {
-        // Implement me!
         if (!matrixDataStructure.hasVertex(vertLabel)) {
             System.err.println("The vertex does not exist");
             return;
@@ -70,7 +63,6 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
         List<MyPair> neighbours = new ArrayList<MyPair>();
-        // Implement me!
         if (!matrixDataStructure.hasVertex(vertLabel)) {
             System.err.println("The vertex does not exist");
             return neighbours;
@@ -85,7 +77,6 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
         List<MyPair> neighbours = new ArrayList<MyPair>();
-        // Implement me!
         if (!matrixDataStructure.hasVertex(vertLabel)) {
             System.err.println("The vertex does not exist");
             return neighbours;
