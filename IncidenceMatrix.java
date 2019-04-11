@@ -22,45 +22,51 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
     public void addVertex(String vertLabel) {
         if (matrix.hasVertex(vertLabel)) {
-            return;
-        } else {
-            matrix.addVertex(vertLabel);
+            throw new IllegalArgumentException("Vertex already exists.");
         }
+        matrix.addVertex(vertLabel);
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
-        if (!matrix.hasVertex(srcLabel) && matrix.hasVertex(tarLabel)) {
-            System.err.println("One or two vertex does not exit");
-            return;
-        } else if (matrix.getEdgeMap().containsKey(srcLabel + tarLabel))
-            return;
-        else matrix.addEdge(srcLabel, tarLabel, weight);
+        if (!matrix.hasVertex(srcLabel)) {
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot add edge.");
+        }
+        if (matrix.hasEdge(srcLabel, tarLabel)) {
+            throw new IllegalArgumentException("Edge already exists. Considering updating the weight.");
+        }
+        matrix.addEdge(srcLabel, tarLabel, weight);
     } // end of addEdge()
 
     public int getEdgeWeight(String srcLabel, String tarLabel) {
-        if (!matrix.hasEdge(srcLabel, tarLabel))
+        if (!matrix.hasVertex(srcLabel)) {
             return EDGE_NOT_EXIST;
-        else
-            return matrix.getEdgeWeight(srcLabel, tarLabel);
+        }
+        if (!matrix.hasEdge(srcLabel, tarLabel)) {
+            return EDGE_NOT_EXIST;
+        }
+        return matrix.getEdgeWeight(srcLabel, tarLabel);
     } // end of existEdge()
 
     public void updateWeightEdge(String srcLabel, String tarLabel, int weight) {
-        if (!matrix.hasVertex(srcLabel) && matrix.hasVertex(tarLabel)) {
-            System.err.println("One or two vertex does not exit");
+        if (!matrix.hasVertex(srcLabel)) {
+            throw new IllegalArgumentException("Source vertex doesn't exist. Cannot update edge weight.");
+        }
+        if (!matrix.hasEdge(srcLabel, tarLabel)) {
+            throw new IllegalArgumentException("Edge doesn't exist. Cannot update weight.");
+        }
+        if (weight == 0) {
+            matrix.removeEdge(srcLabel, tarLabel);
             return;
-        } else if (!matrix.hasEdge(srcLabel, tarLabel)) {
-            System.err.println("The edge does not exist");
-            return;
-        } else if (weight != 0)
-            matrix.updateWeightEdge(srcLabel, tarLabel, weight);
-        else matrix.removeEdge(srcLabel, tarLabel);
+        }
+        matrix.updateWeightEdge(srcLabel, tarLabel, weight);
+
     } // end of updateWeightEdge()
 
     public void removeVertex(String vertLabel) {
         if (!matrix.hasVertex(vertLabel)) {
-            System.err.println("The vertex does not exist");
-            return;
-        } else matrix.removeVertex(vertLabel);
+            throw new IllegalArgumentException("The vertex does not exist.");
+        }
+        matrix.removeVertex(vertLabel);
     } // end of removeVertex()
 
     public List<MyPair> inNearestNeighbours(int k, String vertLabel) {
