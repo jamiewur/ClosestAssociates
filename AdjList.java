@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class AdjList extends AbstractAssocGraph {
 
-    private HashMap<String, Integer> vertToIndex;
+    private Map<String, Integer> vertToIndex;
     private MyLinkedList[] rows;
     private int numOfVerts;
     private int pointer = 0; // Keep track of next vertex index
