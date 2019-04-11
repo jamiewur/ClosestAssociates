@@ -107,22 +107,20 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
 
     public void printVertices(PrintWriter os) {
-        // Implement me!
-        for(String a:matrixDataStructure.vertexMap.keySet()){
-            System.out.print(a+" ");
+        String delimiter = " ";
+        StringJoiner stringJoiner = new StringJoiner(delimiter);
+        for(String ver:matrixDataStructure.vertexMap.keySet()){
+            stringJoiner.add(ver);
         }
+        os.println(stringJoiner.toString());
     } // end of printVertices()
 
 
     public void printEdges(PrintWriter os) {
-        // Implement me!
-        try {
             for (String a : matrixDataStructure.edgeMap.keySet()) {
-                System.out.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrixDataStructure.edgeWeightArray[matrixDataStructure.vertexMap.get(a.substring(0, 1))][matrixDataStructure.edgeMap.get(a)]);
-            }
-        }catch (Exception e){
-            e.getStackTrace();
+                os.println(a.substring(0, 1) + " " + a.substring(1) + " " + matrixDataStructure.edgeWeightArray[matrixDataStructure.vertexMap.get(a.substring(0, 1))][matrixDataStructure.edgeMap.get(a)]);
         }
-    } // end of printEdges()
 
-} // end of class IncidenceMatrix
+    }
+
+}
