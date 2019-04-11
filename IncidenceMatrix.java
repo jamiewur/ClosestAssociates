@@ -73,27 +73,16 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         if (!matrix.hasVertex(vertLabel)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
-        List<MyPair> neighbours = new ArrayList<>();
-        if (k == -1)
-            return matrix.returnAllInNeighbour(vertLabel);
-        else if (k > matrix.checkMaxInK(vertLabel)) {
-            System.out.println("The max number of k of vertex " + vertLabel + " is " + matrix.checkMaxInK(vertLabel));
-            return matrix.returnInKnearestNeighbour(matrix.checkMaxInK(vertLabel), vertLabel);
-        } else
-            return matrix.returnInKnearestNeighbour(k, vertLabel);
+        List<MyPair> neighbors = matrix.returnAllInNeighbour(vertLabel);
+        return getKNearestNeighbors(k, neighbors);
     } // end of inNearestNeighbours()
 
     public List<MyPair> outNearestNeighbours(int k, String vertLabel) {
         if (!matrix.hasVertex(vertLabel)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
-        List<MyPair> neighbours = new ArrayList<>();
-        if (k == -1) {
-            return matrix.returnAllOutNeighbour(vertLabel);
-        } else if (k > matrix.checkMaxOutK(vertLabel)) {
-            System.out.println("The max number of k of vertex " + vertLabel + " is " + matrix.checkMaxOutK(vertLabel));
-            return matrix.returnOutKnearestNeighbour(matrix.checkMaxOutK(vertLabel), vertLabel);
-        } else return matrix.returnOutKnearestNeighbour(k, vertLabel);
+        List<MyPair> neighbors = matrix.returnAllOutNeighbour(vertLabel);
+        return getKNearestNeighbors(k, neighbors);
     } // end of outNearestNeighbours()
 
     public void printVertices(PrintWriter os) {
@@ -113,6 +102,14 @@ public class IncidenceMatrix extends AbstractAssocGraph {
             int weight = matrix.getEdgeWeight(srcLabel, tarLabel);
             os.println(srcLabel + " " + tarLabel + " " + weight);
         }
+    }
+
+    private List<MyPair> getKNearestNeighbors(int k, List<MyPair> neighbours) {
+        if (neighbours.size() < k || k == -1) {
+            return neighbours;
+        }
+        Collections.sort(neighbours, Collections.reverseOrder());
+        return neighbours.subList(0, k);
     }
 
 }

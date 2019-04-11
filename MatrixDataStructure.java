@@ -117,177 +117,53 @@ public class MatrixDataStructure {
     }
 
     /**
-     * Return In K-nearest Neighbours
-     *
-     * @param1 k value of K-nearest
-     * @param2 The vertex
-     * @returns The List of In vertex, which obey k-nearest principle
-     */
-    public List<MyPair> returnInKnearestNeighbour(int k, String vertex) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-        List<MyPair> allNeighbours = this.returnAllNeighbour(vertex);
-        int[] allWeights = new int[100];
-        String[] allNearestNeighbours = new String[100];
-        int[] nearestWeights = new int[k];
-        String[] nearestNeighbours = new String[k];
-        int maxIndex = 0;
-
-        for (int i = 0; i < allNeighbours.size(); i++) {
-            allWeights[i] = allNeighbours.get(i).getValue();
-            allNearestNeighbours[i] = allNeighbours.get(i).getKey();
-        }
-        for (int i = 0; i < k; i++) {
-            for (int j = 0; j < allWeights.length; j++) {
-                if (-allWeights[j] >= -allWeights[maxIndex])
-                    maxIndex = j;
-            }
-            nearestWeights[i] = allWeights[maxIndex];
-            nearestNeighbours[i] = allNearestNeighbours[maxIndex];
-            allWeights[maxIndex] = 0;
-            maxIndex = 0;
-        }
-
-        for (int i = 0; i < nearestWeights.length; i++) {
-            neighbours.add(new MyPair(nearestNeighbours[i], nearestWeights[i]));
-        }
-
-        return neighbours;
-    }
-
-    /**
-     * Return Out K-nearest Neighbours
-     *
-     * @param1 k value of K-nearest
-     * @param2 The vertex
-     * @returns The List of Out vertex, which obey k-nearest principle
-     */
-    public List<MyPair> returnOutKnearestNeighbour(int k, String vertex) {
-        List<MyPair> neighbours = new ArrayList<MyPair>();
-        List<MyPair> allNeighbours = this.returnAllNeighbour(vertex);
-        int[] allWeights = new int[100];
-        String[] allNearestNeighbours = new String[100];
-        int[] nearestWeights = new int[k];
-        String[] nearestNeighbours = new String[k];
-        int maxIndex = 0;
-
-        for (int i = 0; i < allNeighbours.size(); i++) {
-            allWeights[i] = allNeighbours.get(i).getValue();
-            allNearestNeighbours[i] = allNeighbours.get(i).getKey();
-        }
-        for (int i = 0; i < k; i++) {
-            for (int j = 0; j < allWeights.length; j++) {
-                if (allWeights[j] >= allWeights[maxIndex])
-                    maxIndex = j;
-            }
-            nearestWeights[i] = allWeights[maxIndex];
-            nearestNeighbours[i] = allNearestNeighbours[maxIndex];
-            allWeights[maxIndex] = 0;
-            maxIndex = 0;
-        }
-
-        for (int i = 0; i < nearestWeights.length; i++) {
-            neighbours.add(new MyPair(nearestNeighbours[i], nearestWeights[i]));
-        }
-
-        return neighbours;
-    }
-
-    /**
-     * Return Out All real Neighbours (>0)
+     * Return All Real Out Neighbours (>0)
      *
      * @param1 The name of vertex
-     * @returns The List of Out vertex, which obey k-nearest principle
+     * @returns The List of Out vertex
      */
     public List<MyPair> returnAllOutNeighbour(String vertex) {
-        List<MyPair> allNeighbours = new ArrayList<>();
-        String neighbour;
-        int weightOfEdge;
-
-        for (String e : edgeMap.keySet()) {
-            if (e.contains(vertex) && edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)] > 0) {
-                if (e.endsWith(vertex))
-                    neighbour = e.substring(0, 1);
-                else neighbour = e.substring(1);
-                weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
-                allNeighbours.add(new MyPair(neighbour, weightOfEdge));
-            }
-        }
-        return allNeighbours;
+        return getNeighbors(vertex, "OUT");
     }
 
     /**
-     * Return Out All real Neighbours (>0)
+     * Return All Real In Neighbours (>0)
      *
      * @param1 The name of vertex
-     * @returns The List of Out vertex, which obey k-nearest principle
+     * @returns The List of Out vertex
      */
     public List<MyPair> returnAllInNeighbour(String vertex) {
-        List<MyPair> allNeighbours = new ArrayList<>();
-        String neighbour;
-        int weightOfEdge;
-
-        for (String e : edgeMap.keySet()) {
-            if (e.contains(vertex) && edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)] < 0) {
-                if (e.endsWith(vertex))
-                    neighbour = e.substring(0, 1);
-                else neighbour = e.substring(1);
-                weightOfEdge = -edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
-                allNeighbours.add(new MyPair(neighbour, weightOfEdge));
-            }
-        }
-        return allNeighbours;
+        return getNeighbors(vertex, "IN");
     }
 
     /**
-     * Return Out All Neighbours
+     * Return All Neighbors of Type (In or Out)
      *
      * @param1 The name of vertex
-     * @returns The List of Out vertex, which obey k-nearest principle
+     * @param2 Type of the neighbor ("IN" or "OUT")
+     * @returns The List of Neighbors
      */
-    public List<MyPair> returnAllNeighbour(String vertex) {
+    private List<MyPair> getNeighbors(String vertex, String type) {
+        if (!Objects.equals(type, "IN") && !Objects.equals(type, "OUT")) {
+            throw new IllegalArgumentException("Type must be either IN or OUT");
+        }
         List<MyPair> allNeighbours = new ArrayList<>();
-        String neighbour;
-        int weightOfEdge;
-
-        for (String e : edgeMap.keySet()) {
-            if (e.contains(vertex)) {
-                if (e.endsWith(vertex))
-                    neighbour = e.substring(0, 1);
-                else neighbour = e.substring(1);
-                weightOfEdge = edgeWeightArray[vertexMap.get(vertex)][edgeMap.get(e)];
-                allNeighbours.add(new MyPair(neighbour, weightOfEdge));
+        for (String edgeName : edgeMap.keySet()) {
+            String[] vertices = edgeName.split("-");
+            String matchVert, otherVert;
+            if (Objects.equals(type, "IN")) {
+                otherVert = vertices[0];
+                matchVert = vertices[1];
+            } else {
+                matchVert = vertices[0];
+                otherVert = vertices[1];
+            }
+            int weight = getEdgeWeight(vertices[0], vertices[1]);
+            if (Objects.equals(vertex, matchVert) && weight > 0) {
+                allNeighbours.add(new MyPair(otherVert, weight));
             }
         }
         return allNeighbours;
-    }
-
-    /**
-     * Return the number of In-k of a vertex
-     *
-     * @param1 name of the vertex
-     * @returns return the max number of in-k
-     */
-    public int checkMaxInK(String vertex) {
-        int maxInK = 0;
-        for (MyPair e : this.returnAllInNeighbour(vertex)) {
-            if (e.getValue() < 0)
-                maxInK++;
-        }
-        return maxInK;
-    }
-
-    /**
-     * Return the number of Out-k of a vertex
-     *
-     * @param1 name of the vertex
-     * @returns return the max number of Out-k
-     */
-    public int checkMaxOutK(String vertex) {
-        int maxOutK = 0;
-        for (MyPair e : this.returnAllOutNeighbour(vertex)) {
-            maxOutK++;
-        }
-        return maxOutK;
     }
 
     public Map<String, Integer> getVertexMap() {
@@ -298,11 +174,8 @@ public class MatrixDataStructure {
         return edgeMap;
     }
 
-    public int[][] getEdgeWeightArray() {
-        return edgeWeightArray;
-    }
-
     private String createEdgeName(String srcLabel, String tarLabel) {
         return srcLabel + "-" + tarLabel;
     }
+
 }
