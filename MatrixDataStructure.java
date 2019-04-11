@@ -72,7 +72,7 @@ public class MatrixDataStructure {
     public void addEdge(String vertex1, String vertex2, int weight) {
 
         String edgeName = vertex1 + vertex2;
-        edgeMap.put(edgeName,indexOfVertex);
+        edgeMap.put(edgeName,indexOfEdges);
         edgeWeightArray[vertexMap.get(vertex1)][edgeMap.get(edgeName)] = weight;
         edgeWeightArray[vertexMap.get(vertex2)][edgeMap.get(edgeName)] = -weight;
         numbOfEdges++;
@@ -114,18 +114,9 @@ public class MatrixDataStructure {
      * @param1 vertex is the vertex name
      */
     public void removeVertex (String vertex) {
-        String [] relativeEdges = new String[100];
-        for(String edge:edgeMap.keySet()) {
-            if(edge.contains(vertex))
-                 for(int ver: vertexMap.values())
-                 edgeWeightArray[ver][edgeMap.get(edge)] = 0;
-        }
+        edgeMap.entrySet().removeIf(item -> item.getKey().contains(vertex));
         vertexMap.remove(vertex);
 
-        for (String edge:edgeMap.keySet()) {
-            if(edge.contains(vertex))
-
-        }
         numbOfVertex--;
         numbOfEdges--;
     }
