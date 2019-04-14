@@ -24,7 +24,7 @@ public class AdjList extends AbstractAssocGraph {
 
     public void addVertex(String vertLabel) {
         if (vertToIndex.containsKey(vertLabel)) {
-            throw new IllegalArgumentException("Vertex already exits.");
+            return;
         }
         updateArrayLength();
         vertToIndex.put(vertLabel, pointer);
