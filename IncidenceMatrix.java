@@ -28,6 +28,9 @@ public class IncidenceMatrix extends AbstractAssocGraph {
     } // end of addVertex()
 
     public void addEdge(String srcLabel, String tarLabel, int weight) {
+        if (weight <= 0) {
+            throw new IllegalArgumentException("Weight has to be positive.");
+        }
         if (!matrix.hasVertex(srcLabel)) {
             throw new IllegalArgumentException("Source vertex doesn't exist. Cannot add edge.");
         }
@@ -54,7 +57,7 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         if (!matrix.hasEdge(srcLabel, tarLabel)) {
             throw new IllegalArgumentException("Edge doesn't exist. Cannot update weight.");
         }
-        if (weight == 0) {
+        if (weight <= 0) {
             matrix.removeEdge(srcLabel, tarLabel);
             return;
         }
