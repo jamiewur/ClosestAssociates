@@ -56,6 +56,7 @@ public class GraphGenerator {
                 String tarLabel = vertices.get(j).toString();
                 int weight = generateRandomWeight();
                 graph.addEdge(srcLabel, tarLabel, weight);
+                numOfAddedEdges++;
             }
         }
     }
