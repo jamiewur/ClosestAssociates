@@ -65,27 +65,33 @@ public class GraphGenerator {
         long stopTime = System.nanoTime();
         long elapsedTime = stopTime - startTime;
         double elapsedTimeInMS = elapsedTime / 1000000.0;
-        String info = String.format("Generating graph with %s vertices and %s edges took: %.2f milliseconds.",
+        String info = String.format("Generating graph with %s vertices and %s edges took: %.2f milliseconds.\n",
                 numOfVerts, numOfEdges, elapsedTimeInMS);
         System.out.println(info);
     }
 
     public void testAdjList() {
-        System.out.println("**Testing Adjacency List**");
+        System.out.println("**Testing Adjacency List**\n");
         adjList = new AdjList();
         growGraph(adjList);
         testRemoveVertices(adjList);
+        adjList = new AdjList();
+        growGraph(adjList);
+        testRemoveEdges(adjList);
 
-        System.out.println("**End of Testing Adjacency List**");
+        System.out.println("**End of Testing Adjacency List**\n");
     }
 
     public void testIncMat() {
-        System.out.println("**Testing Incidence Matrix**");
+        System.out.println("**Testing Incidence Matrix**\n");
         incMat = new IncidenceMatrix();
         growGraph(incMat);
         testRemoveVertices(incMat);
+        incMat = new IncidenceMatrix();
+        growGraph(incMat);
+        testRemoveEdges(incMat);
 
-        System.out.println("**End of Testing Incidence Matrix**");
+        System.out.println("**End of Testing Incidence Matrix**\n");
     }
 
     private void testRemoveVertices(AbstractAssocGraph graph) {
@@ -97,7 +103,19 @@ public class GraphGenerator {
         long stopTime = System.nanoTime();
         long elapsedTime = stopTime - startTime;
         double elapsedTimeInMS = elapsedTime / 1000000.0;
-        String info = String.format("Removing %s vertices took: %.2f milliseconds.", numOfVerts, elapsedTimeInMS);
+        String info = String.format("Removing %s vertices took: %.2f milliseconds.\n", numOfVerts, elapsedTimeInMS);
+        System.out.println(info);
+    }
+
+    private void testRemoveEdges(AbstractAssocGraph graph) {
+        long startTime = System.nanoTime();
+        for (Map.Entry<String, String> edge : addedEdges.entrySet()) {
+            graph.updateWeightEdge(edge.getKey(), edge.getValue(), 0);
+        }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Removing %s edges took: %.2f milliseconds.\n", numOfEdges, elapsedTimeInMS);
         System.out.println(info);
     }
 
@@ -106,6 +124,7 @@ public class GraphGenerator {
     }
 
     public static void main(String[] args) {
+        System.out.println("Low Density Graph\n");
         GraphGenerator g = new GraphGenerator(500, Density.LOW);
         g.testAdjList();
         g.testIncMat();
