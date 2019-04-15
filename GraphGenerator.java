@@ -31,21 +31,24 @@ public class GraphGenerator {
 
     private void calculateNumOfEdges() {
         if (density == Density.HIGH) {
-            numOfEdges = maxNumEdges;
+            numOfEdges = (int) (maxNumEdges * 0.3);
         } else if (density == Density.MEDIUM) {
-            numOfEdges = (int) (maxNumEdges * 0.66);
+            numOfEdges = (int) (maxNumEdges * 0.1);
         } else {
-            numOfEdges = (int) (maxNumEdges * 0.33);
+            numOfEdges = (int) (maxNumEdges * 0.05);
         }
     }
 
     private void growGraph(AbstractAssocGraph graph) {
+        System.out.println("Growing graph...");
         calculateNumOfEdges();
+        long startTime = System.nanoTime();
         for (Integer vertex : vertices) {
             String vertLabel = vertex.toString();
             graph.addVertex(vertLabel);
         }
         int numOfAddedEdges = 0;
+        addedEdges = new HashMap<>();
         outer:
         for (int i = 0; i < vertices.size(); i++) {
             String srcLabel = vertices.get(i).toString();
