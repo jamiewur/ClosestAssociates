@@ -186,10 +186,19 @@ public class GraphGenerator {
     }
 
     public static void main(String[] args) {
+        int totalVerts = 100;
+        System.out.println("High Density Graph\n");
+        GraphGenerator generator = new GraphGenerator(totalVerts, Density.HIGH);
+        generator.testAdjList();
+        generator.testIncMat();
+        System.out.println("Medium Density Graph\n");
+        generator = new GraphGenerator(totalVerts, Density.MEDIUM);
+        generator.testAdjList();
+        generator.testIncMat();
         System.out.println("Low Density Graph\n");
-        GraphGenerator g = new GraphGenerator(500, Density.LOW);
-        g.testAdjList();
-        g.testIncMat();
+        generator = new GraphGenerator(totalVerts, Density.LOW);
+        generator.testAdjList();
+        generator.testIncMat();
     }
 
 }
