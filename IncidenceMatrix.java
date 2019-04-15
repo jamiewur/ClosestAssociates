@@ -22,7 +22,7 @@ public class IncidenceMatrix extends AbstractAssocGraph {
 
     public void addVertex(String vertLabel) {
         if (matrix.hasVertex(vertLabel)) {
-            throw new IllegalArgumentException("Vertex already exists.");
+            return;
         }
         matrix.addVertex(vertLabel);
     } // end of addVertex()

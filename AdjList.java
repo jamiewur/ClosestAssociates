@@ -19,12 +19,12 @@ public class AdjList extends AbstractAssocGraph {
      */
     public AdjList() {
         vertToIndex = new HashMap<>();
-        rows = new MyLinkedList[30];
+        rows = new MyLinkedList[500];
     } // end of AdjList()
 
     public void addVertex(String vertLabel) {
         if (vertToIndex.containsKey(vertLabel)) {
-            throw new IllegalArgumentException("Vertex already exits.");
+            return;
         }
         updateArrayLength();
         vertToIndex.put(vertLabel, pointer);
@@ -146,7 +146,7 @@ public class AdjList extends AbstractAssocGraph {
         if (currentLen - pointer <= 5) {
             // Increase array size by 25 when the difference between current size and vertex pointer
             // is smaller than or equal to 5
-            int newLen = currentLen + 25;
+            int newLen = currentLen + 500;
             rows = Arrays.copyOf(rows, newLen);
         }
     }
