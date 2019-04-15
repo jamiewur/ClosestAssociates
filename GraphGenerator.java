@@ -1,7 +1,5 @@
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,6 +12,7 @@ public class GraphGenerator {
     private int numOfEdges;
     private int maxNumEdges;
     private List<Integer> vertices;
+    private Map<String, String> addedEdges;
 
     private enum Density {
         LOW,
@@ -59,9 +58,47 @@ public class GraphGenerator {
                 String tarLabel = vertices.get(j).toString();
                 int weight = generateRandomWeight();
                 graph.addEdge(srcLabel, tarLabel, weight);
+                addedEdges.put(srcLabel, tarLabel);
                 numOfAddedEdges++;
             }
         }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Generating graph with %s vertices and %s edges took: %.2f milliseconds.",
+                numOfVerts, numOfEdges, elapsedTimeInMS);
+        System.out.println(info);
+    }
+
+    public void testAdjList() {
+        System.out.println("**Testing Adjacency List**");
+        adjList = new AdjList();
+        growGraph(adjList);
+        testRemoveVertices(adjList);
+
+        System.out.println("**End of Testing Adjacency List**");
+    }
+
+    public void testIncMat() {
+        System.out.println("**Testing Incidence Matrix**");
+        incMat = new IncidenceMatrix();
+        growGraph(incMat);
+        testRemoveVertices(incMat);
+
+        System.out.println("**End of Testing Incidence Matrix**");
+    }
+
+    private void testRemoveVertices(AbstractAssocGraph graph) {
+        long startTime = System.nanoTime();
+        for (Integer vertex : vertices) {
+            String vertLabel = vertex.toString();
+            graph.removeVertex(vertLabel);
+        }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Removing %s vertices took: %.2f milliseconds.", numOfVerts, elapsedTimeInMS);
+        System.out.println(info);
     }
 
     private int generateRandomWeight() {
@@ -69,11 +106,9 @@ public class GraphGenerator {
     }
 
     public static void main(String[] args) {
-        GraphGenerator g = new GraphGenerator(1000, Density.HIGH);
-        AdjList adjlist = new AdjList();
-        g.growGraph(adjlist);
-        adjlist.printVertices(new PrintWriter(System.out, true));
-        adjlist.printEdges(new PrintWriter(System.out, true));
+        GraphGenerator g = new GraphGenerator(500, Density.LOW);
+        g.testAdjList();
+        g.testIncMat();
     }
 
 }
