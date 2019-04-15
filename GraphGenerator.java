@@ -131,8 +131,39 @@ public class GraphGenerator {
     }
 
     private void testNearestNeighbors(AbstractAssocGraph graph) {
+        int[] ks = {-1, 5, numOfVerts - 1};
+        for (int i = 0; i < ks.length; i++) {
+            testOutNeighbors(graph, ks[i]);
+            testInNeighbors(graph, ks[i]);
+        }
+    }
 
+    private void testInNeighbors(AbstractAssocGraph graph, int k) {
+        long startTime = System.nanoTime();
+        for (Integer vertex : vertices) {
+            String vertLabel = vertex.toString();
+            graph.inNearestNeighbours(k, vertLabel);
+        }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Getting %s nearest in-neighbors for %s vertices took: %.2f milliseconds.\n",
+                k, numOfVerts, elapsedTimeInMS);
+        System.out.println(info);
+    }
 
+    private void testOutNeighbors(AbstractAssocGraph graph, int k) {
+        long startTime = System.nanoTime();
+        for (Integer vertex : vertices) {
+            String vertLabel = vertex.toString();
+            graph.outNearestNeighbours(k, vertLabel);
+        }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Getting %s nearest out-neighbors for %s vertices took: %.2f milliseconds.\n",
+                k, numOfVerts, elapsedTimeInMS);
+        System.out.println(info);
     }
 
     private void testChangeWeights(AbstractAssocGraph graph) {
