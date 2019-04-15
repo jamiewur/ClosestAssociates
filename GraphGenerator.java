@@ -13,6 +13,7 @@ public class GraphGenerator {
     private int maxNumEdges;
     private List<Integer> vertices;
     private Map<String, String> addedEdges;
+    private List<Integer> newWeights;
 
     private enum Density {
         LOW,
@@ -38,9 +39,17 @@ public class GraphGenerator {
         }
     }
 
+    private void generateNewWeights() {
+        newWeights = new ArrayList<>();
+        for (int i = 0; i < numOfEdges; i++) {
+            newWeights.add(generateRandomWeight());
+        }
+    }
+
     private void growGraph(AbstractAssocGraph graph) {
         System.out.println("Growing graph...");
         calculateNumOfEdges();
+        generateNewWeights();
         long startTime = System.nanoTime();
         for (Integer vertex : vertices) {
             String vertLabel = vertex.toString();
@@ -74,11 +83,12 @@ public class GraphGenerator {
         System.out.println("**Testing Adjacency List**\n");
         adjList = new AdjList();
         growGraph(adjList);
+        testNearestNeighbors(adjList);
+        testChangeWeights(adjList);
         testRemoveVertices(adjList);
         adjList = new AdjList();
         growGraph(adjList);
         testRemoveEdges(adjList);
-
         System.out.println("**End of Testing Adjacency List**\n");
     }
 
@@ -86,11 +96,12 @@ public class GraphGenerator {
         System.out.println("**Testing Incidence Matrix**\n");
         incMat = new IncidenceMatrix();
         growGraph(incMat);
+        testNearestNeighbors(incMat);
+        testChangeWeights(incMat);
         testRemoveVertices(incMat);
         incMat = new IncidenceMatrix();
         growGraph(incMat);
         testRemoveEdges(incMat);
-
         System.out.println("**End of Testing Incidence Matrix**\n");
     }
 
@@ -117,6 +128,26 @@ public class GraphGenerator {
         double elapsedTimeInMS = elapsedTime / 1000000.0;
         String info = String.format("Removing %s edges took: %.2f milliseconds.\n", numOfEdges, elapsedTimeInMS);
         System.out.println(info);
+    }
+
+    private void testNearestNeighbors(AbstractAssocGraph graph) {
+
+
+    }
+
+    private void testChangeWeights(AbstractAssocGraph graph) {
+        long startTime = System.nanoTime();
+        int i = 0;
+        for (Map.Entry<String, String> edge : addedEdges.entrySet()) {
+            int weight = newWeights.get(i++);
+            graph.updateWeightEdge(edge.getKey(), edge.getValue(), weight);
+        }
+        long stopTime = System.nanoTime();
+        long elapsedTime = stopTime - startTime;
+        double elapsedTimeInMS = elapsedTime / 1000000.0;
+        String info = String.format("Changing weights for %s edges took: %.2f milliseconds.\n", numOfEdges, elapsedTimeInMS);
+        System.out.println(info);
+
     }
 
     private int generateRandomWeight() {
