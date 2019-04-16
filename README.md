@@ -52,7 +52,7 @@ outer loop:
 
 ## Experiments
 
-For this project, we want to test the performance of the two graph data structures, **adjacency list** and **incidence matrix**, under three scenarios with varied densities. To create the graphs to test, we decided to have 1,000 vertices and then vary the density by adding different numbers of edges.
+For this project, we want to test the performance of the two graph data structures, **adjacency list** and **incidence matrix**, under three scenarios with varied densities. To create the graphs to test, we decided to have **1,000** vertices and then vary the density by adding different numbers of edges.
 
 To vary the density, we defined three types of densities: **High** (0.3), **Medium** (0.1), and **Low** (0.05). Although the theoretical range of the density is [0, 1], due to the limitations of our computing power, too high a density would cause the experiments to run a long time or even face `Out of Memory` exception, since 1,000 vertices can have a maximum of whopping 999,000 edges. Therefore, we arrived at those three numbers as they are not extremely high to cause memory or time issues, and they are spread out and large enough to create significant experimental results.
 
@@ -91,6 +91,108 @@ For each of the two data structures with a given density, we run the following o
 ### Running Experiments:
 
 For each iteration of the above scenarios, each data structure generates 9 results per density. We have run the scenarios 5 times and calculated the average of those 5 iterations to get a more accurate overall picture of the performances.
+
+## Analysis of Results
+
+All the results below are running time in milliseconds.
+
+### Scenario: Shrinking Graph
+
+#### Remove Vertices Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |     423.13     |     3,632.49     |
+| **Medium Density** |     28.12      |      412.57      |
+|  **Low Density**   |      6.99      |      98.73       |
+
+
+
+#### Remove Edges Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |      0.2       |       0.39       |
+| **Medium Density** |      0.03      |       0.11       |
+|  **Low Density**   |      0.02      |       0.07       |
+
+### 
+
+
+
+### Scenario: Nearest Neighbors
+
+#### Get All In-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |    1,665.35    |    40,373.28     |
+| **Medium Density** |     344.46     |    11,819.36     |
+|  **Low Density**   |     141.1      |     5,870.88     |
+
+
+
+#### Get 5-Nearest In-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |    1,605.53    |    36,579.51     |
+| **Medium Density** |     350.95     |    11,944.09     |
+|  **Low Density**   |     146.94     |     5,734.62     |
+
+
+
+#### Get 999-Nearest In-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |    1,593.38    |    37,019.26     |
+| **Medium Density** |     289.83     |    11,939.92     |
+|  **Low Density**   |     151.26     |     5,687.89     |
+
+
+
+#### Get All Out-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |      11.4      |    38,574.86     |
+| **Medium Density** |      1.75      |    12,619.65     |
+|  **Low Density**   |      0.8       |     6,623.56     |
+
+
+
+#### Get 5-Nearest Out-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |     57.26      |    39,498.02     |
+| **Medium Density** |      9.93      |    12,088.65     |
+|  **Low Density**   |      4.95      |     5,872.09     |
+
+### 
+
+#### Get 999-Nearest Out-Neighbors Average Running Time:
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |     35.14      |    37,208.86     |
+| **Medium Density** |      9.8       |    12,417.03     |
+|  **Low Density**   |      5.27      |     5,680.68     |
+
+### 
+
+### Scenario: Changing Associations
+
+|                    | Adjacency List | Incidence Matrix |
+| :----------------: | :------------: | :--------------: |
+|  **High Density**  |      0.25      |       0.32       |
+| **Medium Density** |      0.03      |       0.03       |
+|  **Low Density**   |      0.01      |       0.03       |
+
+### 
+
+## Recommendations
 
 
 
