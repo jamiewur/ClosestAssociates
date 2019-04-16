@@ -133,7 +133,7 @@ public class MatrixDataStructure {
     }
 
     /**
-     * Remove the vertex
+     * Remove the edge
      *
      * @param1 srcLabel is first vertex name
      * @param2 tarLabel is second vertex name
@@ -141,9 +141,8 @@ public class MatrixDataStructure {
     public void removeEdge(String srcLabel, String tarLabel) {
         String edgeName = createEdgeName(srcLabel, tarLabel);
         int edgeMapIndex = edgeMap.get(edgeName);
-        for (int i : vertexMap.values()) {
-            edgeWeightArray[i][edgeMapIndex] = 0;
-        }
+        edgeWeightArray[vertexMap.get(srcLabel)][edgeMapIndex] = 0;
+        edgeWeightArray[vertexMap.get(tarLabel)][edgeMapIndex] = 0;
         edgeMap.remove(edgeName);
     }
 
