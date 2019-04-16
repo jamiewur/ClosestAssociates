@@ -120,7 +120,15 @@ public class MatrixDataStructure {
      * @param1 vertex is the vertex name
      */
     public void removeVertex(String vertex) {
-        edgeMap.entrySet().removeIf(item -> item.getKey().contains(vertex));
+        edgeMap.entrySet().removeIf(item -> {
+            String edgeName = item.getKey();
+            String[] vertices = edgeName.split("-");
+            String srcLabel = vertices[0];
+            String tarLabel = vertices[1];
+            boolean matchSrc = Objects.equals(vertex, srcLabel);
+            boolean matchTar = Objects.equals(vertex, tarLabel);
+            return matchSrc || matchTar;
+        });
         vertexMap.remove(vertex);
     }
 
