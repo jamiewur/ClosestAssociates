@@ -106,8 +106,6 @@ All the results below are running time in milliseconds.
 | **Medium Density** |     28.12      |      412.57      |
 |  **Low Density**   |      6.99      |      98.73       |
 
-
-
 #### Remove Edges Average Running Time:
 
 |                    | Adjacency List | Incidence Matrix |
@@ -116,7 +114,7 @@ All the results below are running time in milliseconds.
 | **Medium Density** |      0.03      |       0.11       |
 |  **Low Density**   |      0.02      |       0.07       |
 
-### 
+From the above tables, we can see that adjacency list outperforms incidence matrix on every level, regardless of density. However, even though adjacency list still runs faster in terms of removing edges, but the gap is not as wide as that in removing vertices. Also, both data structures took significantly longer to remove vertices than edges. The results are expected, as when removing a vertex, the graph has to remove all the edges that involve the removed vertex. For adjacency list, it has to loop through all the linked list to find the edge and remove the node within the list; and for incidence matrix, it also has to loop through the columns of the matrix. However, because the structure, incidence matrix can have a really huge column list and looping through that list would take much longer than looping through the vertex list of the adjacency list. This explains the huge differences presented above.
 
 
 
