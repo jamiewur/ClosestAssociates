@@ -107,13 +107,14 @@ public class GraphGenerator {
     }
 
     private void testIncMat() {
+        int initialEdgeSize = 150000;
         writer.println("**Testing Incidence Matrix**\n");
-        incMat = new IncidenceMatrix();
+        incMat = new IncidenceMatrix(initialEdgeSize);
         growGraph(incMat);
         testNearestNeighbors(incMat);
         testChangeWeights(incMat);
         testRemoveVertices(incMat);
-        incMat = new IncidenceMatrix();
+        incMat = new IncidenceMatrix(initialEdgeSize);
         growGraph(incMat);
         testRemoveEdges(incMat);
         writer.println("**End of Testing Incidence Matrix**\n");
