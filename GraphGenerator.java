@@ -204,12 +204,15 @@ public class GraphGenerator {
         File output = new File("evaluation.out");
         Files.deleteIfExists(output.toPath());
         int totalVerts = 1000;
+        System.out.println("Testing High Density Graphs...");
         GraphGenerator generator = new GraphGenerator(totalVerts, Density.HIGH);
         generator.getWriter().println("High Density Graph\n");
         generator.test();
+        System.out.println("Testing Medium Density Graphs...");
         generator = new GraphGenerator(totalVerts, Density.MEDIUM);
         generator.getWriter().println("Medium Density Graph\n");
         generator.test();
+        System.out.println("Testing Low Density Graphs...");
         generator = new GraphGenerator(totalVerts, Density.LOW);
         generator.getWriter().println("Low Density Graph\n");
         generator.test();
