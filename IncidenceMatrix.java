@@ -20,6 +20,10 @@ public class IncidenceMatrix extends AbstractAssocGraph {
         matrix = new MatrixDataStructure();
     } // end of IncidentMatrix()
 
+    public IncidenceMatrix(int initialEdgeSize) {
+        matrix = new MatrixDataStructure(initialEdgeSize);
+    }
+
     public void addVertex(String vertLabel) {
         if (matrix.hasVertex(vertLabel)) {
             return;

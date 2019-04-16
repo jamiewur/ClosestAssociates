@@ -7,6 +7,7 @@ public class MatrixDataStructure {
     private Map<String, Integer> vertexMap;
     private Map<String, Integer> edgeMap;
     private int[][] edgeWeightArray;
+    private int edgeIncrement;
 
     /**
      * Constructor by default
@@ -15,6 +16,14 @@ public class MatrixDataStructure {
         vertexMap = new HashMap<>();
         edgeMap = new HashMap<>();
         edgeWeightArray = new int[500][3000];
+        edgeIncrement = 3000;
+    }
+
+    public MatrixDataStructure(int initialEdgeSize) {
+        vertexMap = new HashMap<>();
+        edgeMap = new HashMap<>();
+        edgeWeightArray = new int[500][initialEdgeSize];
+        edgeIncrement = initialEdgeSize;
     }
 
     /**
@@ -69,7 +78,7 @@ public class MatrixDataStructure {
         if (currNumCols - indexOfEdges <= 5) {
             // Increase array size by 25 when the difference between current size and edge index
             // is smaller than or equal to 5
-            int newNumCols = currNumCols + 3000;
+            int newNumCols = currNumCols + edgeIncrement;
             int currNumRows = edgeWeightArray.length;
             edgeWeightArray = updateArraySize(edgeWeightArray, currNumRows, newNumCols);
         }
